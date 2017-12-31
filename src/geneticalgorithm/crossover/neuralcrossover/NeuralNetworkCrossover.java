@@ -45,18 +45,30 @@ public class NeuralNetworkCrossover implements CrossoverInterface {
             return first;
         }
 
-        NeuralNetwork newNet = null;
-        
+        NeuralNetwork newNet = new NeuralNetwork();
+        int sizeOfHidden = Math.max(firstNet.hiddenNodes.length, secondNet.hiddenNodes.length);
+        newNet.hiddenNodes = new Node[sizeOfHidden][];
         if (firstNet.inputs[0].branch.length >= secondNet.inputs[0].branch.length){
-            newNet = new NeuralNetwork(firstNet.inputs, firstNet.outputs);
+            newNet.inputs = new Node[firstNet.inputs.length];
+            for (int i = 0; i<firstNet.inputs.length; i++){
+                newNet.inputs[i] = new Node(firstNet.inputs[i].val);
+            }
+            newNet.outputs = new Node[firstNet.outputs.length];
+            for (int i = 0; i<firstNet.outputs.length; i++){
+                newNet.outputs[i] = new Node(firstNet.outputs[i].val);
+            }
         }
         else {
-            newNet = new NeuralNetwork(secondNet.inputs, secondNet.outputs);
+            newNet.inputs = new Node[secondNet.inputs.length];
+            for (int i = 0; i<secondNet.inputs.length; i++){
+                newNet.inputs[i] = new Node(secondNet.inputs[i].val);
+            }
+            
+            newNet.outputs = new Node[secondNet.outputs.length];
+            for (int i = 0; i<secondNet.outputs.length; i++){
+                newNet.outputs[i] = new Node(secondNet.outputs[i].val);
+            }
         }
-        
-        int sizeOfHidden = Math.max(firstNet.hiddenNodes.length, secondNet.hiddenNodes.length);
-        
-        newNet.hiddenNodes = new Node[sizeOfHidden][];
         
         for (int i = 0; i<sizeOfHidden; i++){
             int maxSize = 0;
@@ -73,25 +85,38 @@ public class NeuralNetworkCrossover implements CrossoverInterface {
             
             for (int x = 0; x<maxSize; x++){
                 if (i >= firstNet.hiddenNodes.length){
-                    newNet.hiddenNodes[i][x] = new Node(secondNet.hiddenNodes[i][x]);
+                    newNet.hiddenNodes[i][x] = new Node(secondNet.hiddenNodes[i][x].val);
                 }
                 else if (i >= secondNet.hiddenNodes.length){
-                    newNet.hiddenNodes[i][x] = new Node(firstNet.hiddenNodes[i][x]);
+                    newNet.hiddenNodes[i][x] = new Node(firstNet.hiddenNodes[i][x].val);
                 }
                 // 50% chance to choose a node from either neural network.
                 else if (x < firstNet.hiddenNodes[i].length && x < secondNet.hiddenNodes[i].length){
                     newNet.hiddenNodes[i][x] = (ThreadLocalRandom.current().nextDouble() > 0.5) 
-                            ? new Node(firstNet.hiddenNodes[i][x]) : new Node(secondNet.hiddenNodes[i][x]);
+                            ? new Node(firstNet.hiddenNodes[i][x].val) : new Node(secondNet.hiddenNodes[i][x].val);
                 }
                 else if (x < firstNet.hiddenNodes[i].length && x >= secondNet.hiddenNodes[i].length){
-                    newNet.hiddenNodes[i][x] = new Node(firstNet.hiddenNodes[i][x]);
+                    newNet.hiddenNodes[i][x] = new Node(firstNet.hiddenNodes[i][x].val);
                 }
                 else if (x >= firstNet.hiddenNodes[i].length && x < secondNet.hiddenNodes[i].length){
-                    newNet.hiddenNodes[i][x] = new Node(secondNet.hiddenNodes[i][x]);
+                    newNet.hiddenNodes[i][x] = new Node(secondNet.hiddenNodes[i][x].val);
                 }      
             }
         }        
-        NeuralNetworkUtilities.redoBranches(newNet);
+        firstNet = null;
+        secondNet = null;
+        
+        if (newNet.hiddenNodes == null || newNet.hiddenNodes.length == 0){
+            NeuralNetworkUtilities.reconnectLayer(newNet.inputs, newNet.outputs);
+        }
+        else{
+            NeuralNetworkUtilities.reconnectLayer(newNet.inputs, newNet.hiddenNodes[0]);
+            for (int i = 0; i<newNet.hiddenNodes.length - 1; i++){
+                NeuralNetworkUtilities.reconnectLayer(newNet.hiddenNodes[i], newNet.hiddenNodes[i + 1]);
+            }
+            
+            NeuralNetworkUtilities.reconnectLayer(newNet.hiddenNodes[newNet.hiddenNodes.length - 1], newNet.outputs);
+        }
         newNet.createBias();
         return new Individual(newNet, (double)this.fitnessFunction.fitnessFunction(newNet));
     }

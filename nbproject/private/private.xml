@@ -4,8 +4,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/TommyGoris/Desktop/Genetic-Algorithm/src/geneticalgorithm/examples/nqueens/NQueensProblem.java</file>
+            <file>file:/C:/Users/TommyGoris/Desktop/Genetic-Algorithm/test/geneticalgorithm/mutation/neuralmutation/AddNodeTest.java</file>
+            <file>file:/C:/Users/TommyGoris/Desktop/Genetic-Algorithm/src/geneticalgorithm/examples/evolveann/NeuralNetworkFitnessFunction.java</file>
             <file>file:/C:/Users/TommyGoris/Desktop/Genetic-Algorithm/src/geneticalgorithm/mutation/neuralmutation/AddNode.java</file>
+            <file>file:/C:/Users/TommyGoris/Desktop/Genetic-Algorithm/src/geneticalgorithm/mutation/neuralmutation/DeleteNode.java</file>
+            <file>file:/C:/Users/TommyGoris/Desktop/Genetic-Algorithm/src/geneticalgorithm/examples/evolveann/DrawNeuralNetwork.java</file>
             <file>file:/C:/Users/TommyGoris/Desktop/Genetic-Algorithm/src/geneticalgorithm/crossover/neuralcrossover/NeuralNetworkCrossover.java</file>
+            <file>file:/C:/Users/TommyGoris/Desktop/Genetic-Algorithm/src/geneticalgorithm/neuralnetwork/Node.java</file>
             <file>file:/C:/Users/TommyGoris/Desktop/Genetic-Algorithm/src/geneticalgorithm/examples/evolveann/EvolveNeuralNetwork.java</file>
             <file>file:/C:/Users/TommyGoris/Desktop/Genetic-Algorithm/src/geneticalgorithm/examples/evolveann/NeuralNetworkUtilities.java</file>
             <file>file:/C:/Users/TommyGoris/Desktop/Genetic-Algorithm/src/geneticalgorithm/neuralnetwork/NeuralNetwork.java</file>

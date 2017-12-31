@@ -16,7 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class NeuralNetworkUtilities {
     
-    public static NeuralNetwork initTree(NeuralNetwork net, double[] inputTrainData, int outputs){
+    public static NeuralNetwork initTree(NeuralNetwork net, Double[] inputTrainData, int outputs){
         if (inputTrainData.length == 0 || outputs==0){
             System.out.println("Please use correct input/output data");
             return null;

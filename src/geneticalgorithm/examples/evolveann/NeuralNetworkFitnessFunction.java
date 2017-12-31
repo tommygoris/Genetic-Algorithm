@@ -9,6 +9,7 @@ import static geneticalgorithm.examples.evolveann.EvolveNeuralNetwork.check;
 import geneticalgorithm.neuralnetwork.NeuralNetwork;
 import geneticalgorithm.neuralnetwork.Node;
 import geneticalgorithm.problem.ProblemInterface;
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -16,55 +17,64 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Tommy
  */
 public class NeuralNetworkFitnessFunction implements ProblemInterface {
-    private final double[] actual;
-    public NeuralNetworkFitnessFunction(double[] actual){
+    private final Double[] actual;
+    private final Double[][] input;
+    public NeuralNetworkFitnessFunction(Double[] actual, Double[][] input){
         this.actual = actual;
+        this.input = input;
     }
     
     private final int bias = 1;
     @Override
     public Object fitnessFunction(Object value) {
         NeuralNetwork network = (NeuralNetwork)value;
-        double fitness = 0;
-        this.propagate(network);
-        for (int i = 0; i < actual.length; i++){
-            System.out.println("The output Val is " + network.outputs[i].val);
-            fitness = network.outputs[i].val - actual[i];
-        }
-        return fitness;
+        return this.propagate(network);
     }    
     
-    public NeuralNetwork propagate(NeuralNetwork net) {
-        if (net.hiddenNodes == null || net.hiddenNodes.length == 0 || (net.hiddenNodes.length == 1 && net.hiddenNodes[0].length == 0)){
-             propagateOneStep(net.inputs, net.outputs, net.bias[0]);
-             net.outputs = tanh(net.outputs);
-             return net;
+    public double propagate(NeuralNetwork net) {
+        double fitness = 0;
+        for (int inputs = 0; inputs<this.input.length; inputs++){
+            for (int inputsLength = 0; inputsLength<this.input[inputs].length; inputsLength++){
+                net.inputs[inputsLength].val = this.input[inputs][inputsLength];
+            }
+            if (net.hiddenNodes == null || net.hiddenNodes.length == 0 || (net.hiddenNodes.length == 1 && net.hiddenNodes[0].length == 0)){
+                 propagateOneStep(net.inputs, net.outputs, net.bias[0]);
+                 net.outputs = sig(net.outputs);
+                 
+                if (actual[inputs] > 0.5 && net.outputs[0].val > 0.5){
+                fitness += 1;
+                }
+                if (actual[inputs] < 0.5 && net.outputs[0].val < 0.5) {
+                fitness += 1;
+                }
+                 continue;
+            }
+            propagateOneStep(net.inputs, net.hiddenNodes[0], net.bias[0]);
+            net.hiddenNodes[0] = sig(net.hiddenNodes[0]);
+            for (int i = 0; i<net.hiddenNodes.length - 1; i++){
+                propagateOneStep(net.hiddenNodes[i], net.hiddenNodes[i + 1], net.bias[i + 1]);
+                net.hiddenNodes[i + 1] = sig(net.hiddenNodes[i + 1]);
+            }
+            propagateOneStep(net.hiddenNodes[net.hiddenNodes.length - 1], net.outputs, net.bias[net.bias.length - 1]);
+            net.outputs = sig(net.outputs);
+            //System.out.println(actual[inputs] + "  " + net.outputs[0].val);
+            /// only one output node.
+            if (actual[inputs] > 0.5 && net.outputs[0].val > 0.5){
+                fitness += 1;
+            }
+            if ((actual[inputs] < 0.5 && net.outputs[0].val < 0.5)) {
+                fitness += 1;
+            }
         }
-        boolean one = net.inputs == null;
-        boolean two = net.hiddenNodes[0] == null;
-        boolean three = net.bias[0] == null;
-        check(net, "fitnessfunction");
-        propagateOneStep(net.inputs, net.hiddenNodes[0], net.bias[0]);
-        net.hiddenNodes[0] = tanh(net.hiddenNodes[0]);
-        for (int i = 0; i<net.hiddenNodes.length - 1; i++){
-            propagateOneStep(net.hiddenNodes[i], net.hiddenNodes[i + 1], net.bias[i + 1]);
-            net.hiddenNodes[i + 1] = tanh(net.hiddenNodes[i + 1]);
-        }
-        propagateOneStep(net.hiddenNodes[net.hiddenNodes.length - 1], net.outputs, net.bias[net.bias.length - 1]);
-        net.outputs = tanh(net.outputs);
-        return net;
-
+        return fitness;
     }
 
     private void propagateOneStep(Node[] fromLayer, Node[] toLayer, Node bias) {
         double[] newVals = new double[toLayer.length];
         for (int from = 0; from < fromLayer.length; from++) {
             for (int to = 0; to < toLayer.length; to++) {
-                if (fromLayer[from].connection.length <= to){
-                    System.out.println("error");
-                }
                 double fromVar = fromLayer[from].connection[to];
-                double fromVal = fromLayer[from].val;
+                double fromVal = fromLayer[from].val;       
                 newVals[to] += fromVal * fromVar + bias.val*bias.connection[to];
             }
         }
@@ -79,8 +89,11 @@ public class NeuralNetworkFitnessFunction implements ProblemInterface {
         }
     }
     
-    private double sig(double val) {
-        return 1.0d / (1.0d + Math.exp(-val));
+    private Node[] sig(Node[] array) {
+        for (int i = 0; i<array.length; i++){
+            array[i].val = 1.0d / (1.0d + Math.exp(-array[i].val));
+        }
+        return array;
     }
 
     private Node[] tanh(Node[] array) {
