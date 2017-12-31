@@ -43,28 +43,28 @@ public class NQueensProblem {
         
         while(true){
             
-        pop.population = pop.crossover(tournament);
-        pop.population = pop.mutate(mutation);
-        pop.bestFitness = utilities.getBestFitnessMax(pop);
-        System.out.println(pop.bestFitness);
-        if (pop.bestFitness == solution){
-            System.out.println("Solution found in generation: " + generation);
-            System.out.print("The best Individual is ");
-            System.out.println(Arrays.toString((int[])pop.bestIndividual.individual));
-            printBoard((int[])pop.bestIndividual.individual);
-            break;
-        }
-        printPopulation(pop);
-        try{
-            System.out.println(generation + "   " + pop.bestFitness + "  " + solution);
-            generation+=1;
-            Thread.sleep(10);
-        }
-        
-        catch (InterruptedException e){
-        }
-        
-      }
+            pop.population = pop.crossover(tournament);
+            pop.population = pop.mutate(mutation);
+            pop.bestFitness = utilities.getBestFitnessMax(pop);
+            System.out.println(pop.bestFitness);
+            if (pop.bestFitness == solution){
+                System.out.println("Solution found in generation: " + generation);
+                System.out.print("The best Individual is ");
+                System.out.println(Arrays.toString((int[])pop.bestIndividual.individual));
+                printBoard((int[])pop.bestIndividual.individual);
+                break;
+            }
+            printPopulation(pop);
+            try{
+                System.out.println(generation + "   " + pop.bestFitness + "  " + solution);
+                generation+=1;
+                Thread.sleep(10);
+            }
+
+            catch (InterruptedException e){
+            }
+
+          }
     }
     
     public static Individual[] createRandomPopulation(int lowerBound, int upperBound){

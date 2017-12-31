@@ -12,6 +12,7 @@ import geneticalgorithm.crossover.neuralcrossover.NeuralNetworkCrossover;
 import geneticalgorithm.examples.nqueens.NQueensProblem;
 import geneticalgorithm.mutation.RandomIntArrayMutation;
 import geneticalgorithm.mutation.neuralmutation.AddNode;
+import geneticalgorithm.mutation.neuralmutation.AddNodeOld;
 import geneticalgorithm.mutation.neuralmutation.DeleteNode;
 import geneticalgorithm.neuralnetwork.NeuralNetwork;
 import geneticalgorithm.neuralnetwork.Node;
@@ -29,7 +30,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class EvolveNeuralNetwork {
     //private static final int lengthOfProblem = 10;
-    private static final int populationSize = 10000;
+    private static final int populationSize = 200000;
     private static final int startingNodes = 3;
     private static final int outputNodes = 1;
     //private static final NQueensFitnessFunction fitnessFunction = new NQueensFitnessFunction(lengthOfProblem);
@@ -52,7 +53,7 @@ public class EvolveNeuralNetwork {
         check(pop, "1");
         pop = EvolveNeuralNetwork.cleanUpHiddenLayer(pop);
         check(pop, "2");
-        pop.population = pop.crossover(tournament);
+        //pop.population = pop.crossover(tournament);
         check(pop, "3");       
         pop.population = pop.mutate(addMutation);
         check(pop, "4");      
@@ -167,4 +168,27 @@ public class EvolveNeuralNetwork {
             } 
         }
     }
+    
+    public static void check(NeuralNetwork net, String location){
+        if (net.hiddenNodes == null || net.hiddenNodes.length == 0){
+            return;
+        }
+        if (net.hiddenNodes != null && net.hiddenNodes.length > 0){
+            if (net.hiddenNodes[0].length != net.inputs[0].branch.length){
+                System.out.println("problem before" + location);
+            }
+        }
+
+        for (int i = 0; i<net.hiddenNodes.length - 1; i++){
+            if (net.hiddenNodes[i][0].branch.length != net.hiddenNodes[i + 1].length){
+                System.out.println("problem before" + location);
+            }
+        }
+
+        if (net.hiddenNodes != null && net.hiddenNodes.length > 0){
+            if (net.hiddenNodes[net.hiddenNodes.length - 1][0].branch.length != net.outputs.length){
+                System.out.println("problem before" + location);
+            }
+        } 
+    }   
 }

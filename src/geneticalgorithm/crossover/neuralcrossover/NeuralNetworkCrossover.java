@@ -45,15 +45,13 @@ public class NeuralNetworkCrossover implements CrossoverInterface {
             return first;
         }
 
-        NeuralNetwork newNet = new NeuralNetwork();
+        NeuralNetwork newNet = null;
         
         if (firstNet.inputs[0].branch.length >= secondNet.inputs[0].branch.length){
-            newNet.inputs = firstNet.inputs;
-            newNet.outputs = firstNet.outputs;
+            newNet = new NeuralNetwork(firstNet.inputs, firstNet.outputs);
         }
         else {
-            newNet.inputs = secondNet.inputs;
-            newNet.outputs = secondNet.outputs;
+            newNet = new NeuralNetwork(secondNet.inputs, secondNet.outputs);
         }
         
         int sizeOfHidden = Math.max(firstNet.hiddenNodes.length, secondNet.hiddenNodes.length);
@@ -75,21 +73,21 @@ public class NeuralNetworkCrossover implements CrossoverInterface {
             
             for (int x = 0; x<maxSize; x++){
                 if (i >= firstNet.hiddenNodes.length){
-                    newNet.hiddenNodes[i][x] = secondNet.hiddenNodes[i][x];
+                    newNet.hiddenNodes[i][x] = new Node(secondNet.hiddenNodes[i][x]);
                 }
                 else if (i >= secondNet.hiddenNodes.length){
-                    newNet.hiddenNodes[i][x] = firstNet.hiddenNodes[i][x];
+                    newNet.hiddenNodes[i][x] = new Node(firstNet.hiddenNodes[i][x]);
                 }
                 // 50% chance to choose a node from either neural network.
                 else if (x < firstNet.hiddenNodes[i].length && x < secondNet.hiddenNodes[i].length){
                     newNet.hiddenNodes[i][x] = (ThreadLocalRandom.current().nextDouble() > 0.5) 
-                            ? firstNet.hiddenNodes[i][x] : secondNet.hiddenNodes[i][x];
+                            ? new Node(firstNet.hiddenNodes[i][x]) : new Node(secondNet.hiddenNodes[i][x]);
                 }
                 else if (x < firstNet.hiddenNodes[i].length && x >= secondNet.hiddenNodes[i].length){
-                    newNet.hiddenNodes[i][x] = firstNet.hiddenNodes[i][x];
+                    newNet.hiddenNodes[i][x] = new Node(firstNet.hiddenNodes[i][x]);
                 }
                 else if (x >= firstNet.hiddenNodes[i].length && x < secondNet.hiddenNodes[i].length){
-                    newNet.hiddenNodes[i][x] = secondNet.hiddenNodes[i][x];
+                    newNet.hiddenNodes[i][x] = new Node(secondNet.hiddenNodes[i][x]);
                 }      
             }
         }        

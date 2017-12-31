@@ -5,6 +5,7 @@
  */
 package geneticalgorithm.examples.evolveann;
 
+import static geneticalgorithm.examples.evolveann.EvolveNeuralNetwork.check;
 import geneticalgorithm.neuralnetwork.NeuralNetwork;
 import geneticalgorithm.neuralnetwork.Node;
 import geneticalgorithm.problem.ProblemInterface;
@@ -27,7 +28,7 @@ public class NeuralNetworkFitnessFunction implements ProblemInterface {
         double fitness = 0;
         this.propagate(network);
         for (int i = 0; i < actual.length; i++){
-            //System.out.println("The output Val is " + network.outputs[i].val);
+            System.out.println("The output Val is " + network.outputs[i].val);
             fitness = network.outputs[i].val - actual[i];
         }
         return fitness;
@@ -42,7 +43,7 @@ public class NeuralNetworkFitnessFunction implements ProblemInterface {
         boolean one = net.inputs == null;
         boolean two = net.hiddenNodes[0] == null;
         boolean three = net.bias[0] == null;
-                
+        check(net, "fitnessfunction");
         propagateOneStep(net.inputs, net.hiddenNodes[0], net.bias[0]);
         net.hiddenNodes[0] = tanh(net.hiddenNodes[0]);
         for (int i = 0; i<net.hiddenNodes.length - 1; i++){
@@ -59,6 +60,9 @@ public class NeuralNetworkFitnessFunction implements ProblemInterface {
         double[] newVals = new double[toLayer.length];
         for (int from = 0; from < fromLayer.length; from++) {
             for (int to = 0; to < toLayer.length; to++) {
+                if (fromLayer[from].connection.length <= to){
+                    System.out.println("error");
+                }
                 double fromVar = fromLayer[from].connection[to];
                 double fromVal = fromLayer[from].val;
                 newVals[to] += fromVal * fromVar + bias.val*bias.connection[to];

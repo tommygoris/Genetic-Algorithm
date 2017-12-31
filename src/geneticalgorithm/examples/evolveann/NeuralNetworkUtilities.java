@@ -7,6 +7,7 @@ package geneticalgorithm.examples.evolveann;
 
 import geneticalgorithm.neuralnetwork.NeuralNetwork;
 import geneticalgorithm.neuralnetwork.Node;
+import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -177,6 +178,51 @@ public class NeuralNetworkUtilities {
             System.out.println("problem");
         }
         return net;
+    }
+    
+    public static void reconnectLayer(Node[] fromLayer, Node[] toLayer){
+        
+        for (int i = 0; i<fromLayer.length; i++){
+            fromLayer[i].branch = new Node[toLayer.length];
+            fromLayer[i].connection = new double[toLayer.length];
+            for (int x = 0; x<toLayer.length; x++){
+                fromLayer[i].branch[x] = toLayer[x];
+                fromLayer[i].connection[x] = ThreadLocalRandom.current().nextGaussian();
+            }
+        }
+    }
+    
+    public static void reconnentLayerSaveWeights(Node[] fromLayer, Node[] toLayer){
+        double[] saveWeights = new double[toLayer.length];     
+        for (int i = 0; i<fromLayer.length; i++){
+            for (int x = 0; x<saveWeights.length; x++){
+                if (fromLayer[i].connection == null || fromLayer[i].connection.length <= x){
+                    saveWeights[x] =  ThreadLocalRandom.current().nextGaussian();
+                }
+                else {
+                    saveWeights[x] = fromLayer[i].connection[x];
+                }
+            }
+            fromLayer[i].branch = new Node[toLayer.length];
+            fromLayer[i].connection = new double[toLayer.length];
+                     
+            for (int x = 0; x<toLayer.length; x++){
+                fromLayer[i].branch[x] = toLayer[x];
+            }
+            fromLayer[i].connection = saveWeights;
+        }
+    }
+    
+    public static ArrayList<ArrayList<Node>> toList(Node[][] node){
+        ArrayList<ArrayList<Node>> newList = new ArrayList<>();           
+        for (int i = 0; i <node.length; i++){
+            ArrayList<Node> interList = new ArrayList<Node>();        
+            for (int x = 0; x<node[i].length; x++){
+                interList.add(node[i][x]);
+            }
+            newList.add(interList);
+        }
+        return newList;
     }
     
 }
