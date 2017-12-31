@@ -12,7 +12,6 @@ import geneticalgorithm.crossover.neuralcrossover.NeuralNetworkCrossover;
 import geneticalgorithm.examples.nqueens.NQueensProblem;
 import geneticalgorithm.mutation.RandomIntArrayMutation;
 import geneticalgorithm.mutation.neuralmutation.AddNode;
-import geneticalgorithm.mutation.neuralmutation.AddNodeOld;
 import geneticalgorithm.mutation.neuralmutation.DeleteNode;
 import geneticalgorithm.neuralnetwork.NeuralNetwork;
 import geneticalgorithm.neuralnetwork.Node;
@@ -31,7 +30,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class EvolveNeuralNetwork {
     //private static final int lengthOfProblem = 10;
     private static final int populationSize = 200000;
-    private static final int startingNodes = 3;
+    private static final int startingNodes = 1;
     private static final int outputNodes = 1;
     //private static final NQueensFitnessFunction fitnessFunction = new NQueensFitnessFunction(lengthOfProblem);
     private static final double[] inputData = new double[]{0,0};
@@ -45,35 +44,29 @@ public class EvolveNeuralNetwork {
         AddNode addMutation = new AddNode(fitnessFunction, 0.75);
         DeleteNode deleteMutation = new DeleteNode(fitnessFunction, 0.25);
         Population pop = new Population(EvolveNeuralNetwork.createRandomPopulation(), crossover);
-        check(pop, "0");
         int generation = 0;
         
         while(true){
-        NeuralNetwork net = (NeuralNetwork)pop.population[0].individual;
-        check(pop, "1");
-        pop = EvolveNeuralNetwork.cleanUpHiddenLayer(pop);
-        check(pop, "2");
-        //pop.population = pop.crossover(tournament);
-        check(pop, "3");       
-        pop.population = pop.mutate(addMutation);
-        check(pop, "4");      
-   //     pop.population = pop.mutate(deleteMutation);
-        check(pop, "5");
-        pop.bestFitness = ProblemUtility.getBestFitnessMax(pop);
-        //System.out.println(pop.bestFitness);
-        if (pop.bestFitness == solution){
-            System.out.println("Solution found in generation: " + generation);
-            System.out.print("The best Individual is ");
-            break;
-        }
-        try{
-            //System.out.println(generation + "   " + pop.bestFitness + "  " + solution);
-            generation+=1;
-            Thread.sleep(10);
-        }
-        
-        catch (InterruptedException e){
-        }
+            NeuralNetwork net = (NeuralNetwork)pop.population[0].individual;
+            pop = EvolveNeuralNetwork.cleanUpHiddenLayer(pop);
+            pop.population = pop.crossover(tournament);   
+            pop.population = pop.mutate(addMutation);  
+            pop.population = pop.mutate(deleteMutation);
+            pop.bestFitness = ProblemUtility.getBestFitnessMax(pop);
+            //System.out.println(pop.bestFitness);
+            if (pop.bestFitness == solution){
+                System.out.println("Solution found in generation: " + generation);
+                System.out.print("The best Individual is ");
+                break;
+            }
+            try{
+                //System.out.println(generation + "   " + pop.bestFitness + "  " + solution);
+                generation+=1;
+                Thread.sleep(10);
+            }
+
+            catch (InterruptedException e){
+            }
         
       }
         
