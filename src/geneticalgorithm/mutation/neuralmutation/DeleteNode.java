@@ -24,10 +24,10 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author TommyGoris
  */
 public class DeleteNode implements MutationInterface{
- private final NeuralNetworkFitnessFunction fitnessFunction;
+ private final ProblemInterface fitnessFunction;
     private final double mutationRate;
     
-    public DeleteNode(NeuralNetworkFitnessFunction fitnessFunction, double mutationRate){
+    public DeleteNode(ProblemInterface fitnessFunction, double mutationRate){
         this.fitnessFunction = fitnessFunction;
         this.mutationRate = mutationRate;
     }    

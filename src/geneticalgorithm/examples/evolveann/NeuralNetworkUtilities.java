@@ -5,6 +5,7 @@
  */
 package geneticalgorithm.examples.evolveann;
 
+import geneticalgorithm.Population;
 import geneticalgorithm.neuralnetwork.NeuralNetwork;
 import geneticalgorithm.neuralnetwork.Node;
 import java.util.ArrayList;
@@ -223,6 +224,35 @@ public class NeuralNetworkUtilities {
             newList.add(interList);
         }
         return newList;
+    }
+    
+    public static Population cleanUpHiddenLayer(Population pop){
+        for (int ind = 0; ind<pop.population.length; ind++){
+            int actualSize = 0;
+            Node[][] newHiddenLayer = null;
+            NeuralNetwork net = (NeuralNetwork)pop.population[ind].individual;
+            
+            if (net.hiddenNodes == null){
+                continue;
+            }
+            for (int i = 0; i<net.hiddenNodes.length; i++){
+                if (net.hiddenNodes[i] != null || net.hiddenNodes[i].length > 0){
+                    actualSize += 1;
+                }
+            }
+            int x = 0;
+            newHiddenLayer = new Node[actualSize][];
+            for (int i = 0; i<net.hiddenNodes.length; i++){
+                if (net.hiddenNodes[i] != null || net.hiddenNodes[i].length > 0){
+                    newHiddenLayer[i] = new Node[net.hiddenNodes.length];              
+                    newHiddenLayer[x++] = net.hiddenNodes[i];
+                }
+            }
+            
+            net.hiddenNodes = newHiddenLayer;
+            pop.population[ind].individual = net;
+        }
+        return pop;
     }
     
 }

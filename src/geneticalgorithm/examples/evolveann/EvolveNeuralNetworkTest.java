@@ -32,12 +32,13 @@ import java.util.concurrent.ThreadLocalRandom;
  *
  * @author Tommy
  */
-public class EvolveNeuralNetwork {
+public class EvolveNeuralNetworkTest {
     //private static final int lengthOfProblem = 10;
-    private static final int populationSize = 1000;
+    private static final int populationSize = 20000;
     private static final int startingNodes = 1;
     private static final int outputNodes = 1;
     private static final int sizeOfWord = 12;
+    private static final int frequencyLetters = 26;
     private static Double[][] inputEnglishData = null;
     private static Double[][] inputGermanData = null;
     private static final double[] resultsData = null;
@@ -48,19 +49,20 @@ public class EvolveNeuralNetwork {
     private static int solution;
     
     public static void main(String[] args) throws FileNotFoundException{ 
-        EvolveNeuralNetwork.readEnglishExcel();
-        EvolveNeuralNetwork.readGermanExcel();
+        EvolveNeuralNetworkTest.readEnglishExcel();
+        EvolveNeuralNetworkTest.readGermanExcel();
         solution = englishData.size() + germanData.size();
         inputEnglishData = new Double[englishData.size()][];
         inputGermanData = new Double[germanData.size()][];
         for (int i = 0; i<englishData.size(); i++){
-            inputEnglishData[i] = EvolveNeuralNetwork.stringToIntList(englishData.get(i));
+            //inputEnglishData[i] = EvolveNeuralNetwork.stringToIntList(englishData.get(i));
+            inputEnglishData[i] = EvolveNeuralNetworkTest.frequencyOfLetters(englishData.get(i));
         }
         
         for (int i = 0; i<germanData.size(); i++){
-            inputGermanData[i] = EvolveNeuralNetwork.stringToIntList(germanData.get(i));
+            //inputGermanData[i] = EvolveNeuralNetwork.stringToIntList(germanData.get(i));
+            inputGermanData[i] = EvolveNeuralNetworkTest.frequencyOfLetters(germanData.get(i));
         }
-        
         Double[][] finalInputData = new Double[inputEnglishData.length + inputGermanData.length][];
         
         for (int i = 0; i<inputEnglishData.length; i++){
@@ -71,7 +73,6 @@ public class EvolveNeuralNetwork {
         for (int i = inputEnglishData.length; i<inputEnglishData.length + inputGermanData.length; i++){
             finalInputData[i] = inputGermanData[x++];
         }
-      
         double[] outputEnglish = new double[inputEnglishData.length];
         Arrays.fill(outputEnglish, 1.0);
         double[] outputGerman = new double[inputGermanData.length];
@@ -92,22 +93,22 @@ public class EvolveNeuralNetwork {
         Collections.shuffle(outputList, new Random(seed));   
         Collections.shuffle(inputList, new Random(seed));
         finalInputData = inputList.toArray(new Double[0][0]);
+        
         fitnessFunction = new NeuralNetworkFitnessFunction(outputList.toArray(new Double[0]), inputList.toArray(new Double[0][0]));
-        TournamentSelection tournament = new TournamentSelection(2, 0.10);
-        NeuralNetworkCrossover crossover = new NeuralNetworkCrossover(fitnessFunction, 0.25);
-        AddNode addMutation = new AddNode(fitnessFunction, 0.005);
-        DeleteNode deleteMutation = new DeleteNode(fitnessFunction, 0.005);
-        Population pop = new Population(EvolveNeuralNetwork.createRandomPopulation(), crossover);
+        TournamentSelection tournament = new TournamentSelection(2, 0.80);
+        NeuralNetworkCrossover crossover = new NeuralNetworkCrossover(fitnessFunction, 1);
+        AddNode addMutation = new AddNode(fitnessFunction, 0.00005);
+        DeleteNode deleteMutation = new DeleteNode(fitnessFunction, 0.00005);
+        Population pop = new Population(EvolveNeuralNetworkTest.createRandomPopulation(), crossover);
         int generation = 0;
         
         while(true){
-            NeuralNetwork net = (NeuralNetwork)pop.population[0].individual;
-            pop = EvolveNeuralNetwork.cleanUpHiddenLayer(pop);
+            pop = NeuralNetworkUtilities.cleanUpHiddenLayer(pop);
             pop.population = pop.crossover(tournament);   
             pop.population = pop.mutate(addMutation);  
             pop.population = pop.mutate(deleteMutation);
             pop.bestFitness = ProblemUtility.getBestFitnessMax(pop);
-            System.out.println(pop.bestFitness + "  " + generation);
+            System.out.println(pop.bestFitness + " Generation: " + generation);
             if (pop.bestFitness == solution){
                 System.out.println("Solution found in generation: " + generation);
                 System.out.print("The best Individual is ");
@@ -128,9 +129,9 @@ public class EvolveNeuralNetwork {
     }
     
     private static Individual[] createRandomPopulation(){
-        Individual[] randomPop = new Individual[EvolveNeuralNetwork.populationSize];
+        Individual[] randomPop = new Individual[EvolveNeuralNetworkTest.populationSize];
         for (int i = 0; i<randomPop.length; i++){
-            randomPop[i] = EvolveNeuralNetwork.createRandomIndividual();
+            randomPop[i] = EvolveNeuralNetworkTest.createRandomIndividual();
         }
         return randomPop;
     }
@@ -139,11 +140,11 @@ public class EvolveNeuralNetwork {
         Individual ind = null;
         List<Integer> listPop = new ArrayList<>();
         NeuralNetwork net = new NeuralNetwork();
-        net = NeuralNetworkUtilities.initTree(net, EvolveNeuralNetwork.inputEnglishData[0], EvolveNeuralNetwork.outputNodes);
+        net = NeuralNetworkUtilities.initTree(net, EvolveNeuralNetworkTest.inputEnglishData[0], EvolveNeuralNetworkTest.outputNodes);
         
-        int numOfNodes = ThreadLocalRandom.current().nextInt(EvolveNeuralNetwork.startingNodes);
+        int numOfNodes = ThreadLocalRandom.current().nextInt(EvolveNeuralNetworkTest.startingNodes);
         for (int i = 0; i<numOfNodes; i++){
-            int nodes = ThreadLocalRandom.current().nextInt(1, EvolveNeuralNetwork.startingNodes);
+            int nodes = ThreadLocalRandom.current().nextInt(1, EvolveNeuralNetworkTest.startingNodes);
             listPop.add(nodes);
             numOfNodes -= nodes;            
         }    
@@ -154,36 +155,7 @@ public class EvolveNeuralNetwork {
         
         return new Individual(net, (double)fitnessFunction.fitnessFunction(net));
     }
-    
-    private static Population cleanUpHiddenLayer(Population pop){
-        for (int ind = 0; ind<pop.population.length; ind++){
-            int actualSize = 0;
-            Node[][] newHiddenLayer = null;
-            NeuralNetwork net = (NeuralNetwork)pop.population[ind].individual;
-            
-            if (net.hiddenNodes == null){
-                continue;
-            }
-            for (int i = 0; i<net.hiddenNodes.length; i++){
-                if (net.hiddenNodes[i] != null || net.hiddenNodes[i].length > 0){
-                    actualSize += 1;
-                }
-            }
-            int x = 0;
-            newHiddenLayer = new Node[actualSize][];
-            for (int i = 0; i<net.hiddenNodes.length; i++){
-                if (net.hiddenNodes[i] != null || net.hiddenNodes[i].length > 0){
-                    newHiddenLayer[i] = new Node[net.hiddenNodes.length];              
-                    newHiddenLayer[x++] = net.hiddenNodes[i];
-                }
-            }
-            
-            net.hiddenNodes = newHiddenLayer;
-            pop.population[ind].individual = net;
-        }
-        return pop;
-    }
-    
+
     public static void check(Population pop, String location){
         for (int ind = 0; ind<pop.population.length; ind++)
         {
@@ -264,4 +236,15 @@ public class EvolveNeuralNetwork {
         }  
         return intList;
     }
+    
+    private static Double[] frequencyOfLetters(String convertString){
+        Double[] intList = new Double[frequencyLetters];
+        Arrays.fill(intList, 0.0);
+        convertString = convertString.toLowerCase();
+        for (int i = 0; i<convertString.length(); i++){
+            intList['z' - convertString.charAt(i)]+=1;
+        }
+        return intList;
+    }
 }
+
