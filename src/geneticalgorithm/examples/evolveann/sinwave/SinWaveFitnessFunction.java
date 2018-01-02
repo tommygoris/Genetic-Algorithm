@@ -38,24 +38,38 @@ public class SinWaveFitnessFunction implements ProblemInterface {
             }
             if (net.hiddenNodes == null || net.hiddenNodes.length == 0 || (net.hiddenNodes.length == 1 && net.hiddenNodes[0].length == 0)){
                  propagateOneStep(net.inputs, net.outputs, net.bias[0]);
-                 net.outputs = sig(net.outputs);
+                 net.outputs = tanh(net.outputs);
                  
-            if (actual[inputs] - net.outputs[0].val < 0.05 && actual[inputs] - net.outputs[0].val > -0.05 ){
-                fitness += 1;
+            if (actual[inputs] < 0 && net.outputs[0].val < 0){
+                if ((Math.abs(actual[inputs]) - Math.abs(net.outputs[0].val)) < 0.1 && (Math.abs(actual[inputs]) - Math.abs(net.outputs[0].val)) > -0.1){
+                    fitness += 1;
+                }
+            }
+            if (actual[inputs] > 0 && net.outputs[0].val > 0){
+                if ((Math.abs(actual[inputs]) - Math.abs(net.outputs[0].val)) < 0.1 && (Math.abs(actual[inputs]) - Math.abs(net.outputs[0].val)) > -0.1){
+                    fitness += 1;
+                }
             }
                  continue;
             }
             propagateOneStep(net.inputs, net.hiddenNodes[0], net.bias[0]);
-            net.hiddenNodes[0] = sig(net.hiddenNodes[0]);
+            net.hiddenNodes[0] = tanh(net.hiddenNodes[0]);
             for (int i = 0; i<net.hiddenNodes.length - 1; i++){
                 propagateOneStep(net.hiddenNodes[i], net.hiddenNodes[i + 1], net.bias[i + 1]);
-                net.hiddenNodes[i + 1] = sig(net.hiddenNodes[i + 1]);
+                net.hiddenNodes[i + 1] = tanh(net.hiddenNodes[i + 1]);
             }
             propagateOneStep(net.hiddenNodes[net.hiddenNodes.length - 1], net.outputs, net.bias[net.bias.length - 1]);
-            net.outputs = sig(net.outputs);
+            net.outputs = tanh(net.outputs);
             /// only one output node.
-            if (actual[inputs] - net.outputs[0].val < 0.05 && actual[inputs] - net.outputs[0].val > -0.05 ){
-                fitness += 1;
+            if (actual[inputs] < 0 && net.outputs[0].val < 0){
+                if ((Math.abs(actual[inputs]) - Math.abs(net.outputs[0].val)) < 0.1 && (Math.abs(actual[inputs]) - Math.abs(net.outputs[0].val)) > -0.1){
+                    fitness += 1;
+                }
+            }
+            if (actual[inputs] > 0 && net.outputs[0].val > 0){
+                if ((Math.abs(actual[inputs]) - Math.abs(net.outputs[0].val)) < 0.1 && (Math.abs(actual[inputs]) - Math.abs(net.outputs[0].val)) > -0.1){
+                    fitness += 1;
+                }
             }
         }
         return fitness;
@@ -84,6 +98,13 @@ public class SinWaveFitnessFunction implements ProblemInterface {
     private Node[] sig(Node[] array) {
         for (int i = 0; i<array.length; i++){
             array[i].val = 1.0d / (1.0d + Math.exp(-array[i].val));
+        }
+        return array;
+    }
+    
+    private Node[] tanh(Node[] array) {
+        for (int i = 0; i < array.length; i++) {
+            array[i].val = Math.tanh(array[i].val);
         }
         return array;
     }

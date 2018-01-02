@@ -39,11 +39,11 @@ public class DeleteNode implements MutationInterface{
              NeuralNetwork net = (NeuralNetwork)pop.population[ind].individual;
              
              // No hidden nodes to delete. Return the net.
-            if (net.hiddenNodes == null || net.hiddenNodes.length == 0){
+            if (net.hiddenNodes == null || net.hiddenNodes.length == 0 || this.mutationRate > ThreadLocalRandom.current().nextDouble()){
                 newPop[ind] = pop.population[ind];
                 continue;
             }
-            
+                        
             int layerOfNode = ThreadLocalRandom.current().nextInt(net.hiddenNodes.length);
             List<Node> removeNode = new LinkedList<Node>(Arrays.asList(net.hiddenNodes[layerOfNode]));
             

@@ -75,7 +75,7 @@ public class NeuralNetworkFitnessFunction implements ProblemInterface {
             for (int to = 0; to < toLayer.length; to++) {
                 double fromVar = fromLayer[from].connection[to];
                 double fromVal = fromLayer[from].val;       
-                newVals[to] += fromVal * fromVar;// + bias.val*bias.connection[to];
+                newVals[to] += fromVal * fromVar + bias.val*bias.connection[to];
             }
         }
         

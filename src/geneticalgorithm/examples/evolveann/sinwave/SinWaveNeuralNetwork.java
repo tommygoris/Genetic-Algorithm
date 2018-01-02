@@ -27,9 +27,9 @@ import javafx.util.Pair;
  * @author TommyGoris
  */
 public class SinWaveNeuralNetwork{
-    private static final int populationSize = 500;
-    private static final int inputSize = 50000;
-    private static final int startingNodes = 10;
+    private static final int populationSize = 5;
+    private static final int inputSize = 50;
+    private static final int startingNodes = 1;
     private static final int outputNodes = 1;
     private static SinWaveFitnessFunction fitnessFunction = null;
     private static int solution = inputSize;
@@ -39,14 +39,14 @@ public class SinWaveNeuralNetwork{
         List<Double[]> inputList = inputOutput.getKey();
         List<Double> outputList = inputOutput.getValue();
         fitnessFunction = new SinWaveFitnessFunction(outputList.toArray(new Double[0]), inputList.toArray(new Double[0][0]));
-        TournamentSelection tournament = new TournamentSelection(2, 0.95);
-        NeuralNetworkCrossover crossover = new NeuralNetworkCrossover(fitnessFunction, 1);
-        AddNode addMutation = new AddNode(fitnessFunction, 0.005);
-        DeleteNode deleteMutation = new DeleteNode(fitnessFunction, 0.005);
+        TournamentSelection tournament = new TournamentSelection(7, .80);
+        NeuralNetworkCrossover crossover = new NeuralNetworkCrossover(fitnessFunction, .80);
+        AddNode addMutation = new AddNode(fitnessFunction, 0.25);
+        DeleteNode deleteMutation = new DeleteNode(fitnessFunction, 0.1);
         Population pop = new Population(SinWaveNeuralNetwork.createRandomPopulation(inputOutput.getKey().toArray(new Double[0][0])), crossover);
         int generation = 0;
         while(true){
-            pop = NeuralNetworkUtilities.cleanUpHiddenLayer(pop);
+            //pop = NeuralNetworkUtilities.cleanUpHiddenLayer(pop);
             pop.population = pop.crossover(tournament);   
             pop.population = pop.mutate(addMutation);  
             pop.population = pop.mutate(deleteMutation);
