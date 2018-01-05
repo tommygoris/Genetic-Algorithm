@@ -5,10 +5,21 @@
  */
 package geneticalgorithm.mutation.neuralmutation;
 
+import geneticalgorithm.Individual;
+import geneticalgorithm.Population;
+import geneticalgorithm.mutation.MutationInterface;
+
 /**
  *
  * @author Tommy
  */
-public class AlterWeights {
+public class AlterWeights implements MutationInterface {
+
+    
+    
+    @Override
+    public Individual[] mutate(Population pop) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
