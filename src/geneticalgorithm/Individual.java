@@ -13,7 +13,7 @@ import java.util.Arrays;
  *
  * @author Tommy
  */
-public class Individual<Generic> {
+public class Individual<Generic> implements Comparable<Generic> {
     public Generic individual;
     public double fitness;
     
@@ -47,4 +47,17 @@ public class Individual<Generic> {
         }
         return false;
     }
+
+    @Override
+    public int compareTo(Object obj) {
+           Individual o = (Individual)obj;
+           return Double.compare(this.fitness, o.fitness);
+           
+    }
+    
+    @Override
+    public String toString(){
+        return this.fitness + " ";
+    }
+    
 }
