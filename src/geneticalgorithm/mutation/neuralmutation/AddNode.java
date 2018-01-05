@@ -39,7 +39,7 @@ public class AddNode implements MutationInterface {
            
             NeuralNetwork net = (NeuralNetwork)pop.population[ind].individual;
             
-            if (this.mutationRate > ThreadLocalRandom.current().nextDouble()){
+            if (this.mutationRate < ThreadLocalRandom.current().nextDouble()){
                 newPop[ind] = pop.population[ind];
                 continue;
             }
