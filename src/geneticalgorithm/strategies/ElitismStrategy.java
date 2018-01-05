@@ -8,6 +8,8 @@ package geneticalgorithm.strategies;
 import geneticalgorithm.Individual;
 import geneticalgorithm.Population;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  *
@@ -22,24 +24,19 @@ public class ElitismStrategy {
         this.bestPop = new Individual[savePop];
     }
     
-    public void Strategy(Population pop){   
-        //Individual[] savePop = new Individual[this.savePop];
-        //System.out.println(Arrays.toString(pop.population));
-        Individual[] savePop = new Individual[pop.population.length];
-        for(int i = 0; i < pop.population.length; i++){
-            savePop[i] = new Individual(pop.population[i], pop.population[i].fitness);
-        }
-        Arrays.sort(savePop);
-        for(int i = 0; i < bestPop.length; i++){
-            this.bestPop[i] = savePop[i];
-        }
+    public void Strategy(Population pop){ 
+        Individual[] originalPop = pop.population.clone();
+        Arrays.sort(originalPop, Collections.reverseOrder());
+        this.bestPop = Arrays.copyOfRange(originalPop, 0, this.savePop);
         System.out.println(Arrays.toString(this.bestPop));
-        //System.out.println(this.bestPop[0]);
         System.out.println(Arrays.toString(pop.population));
     }
     
-    public Individual[] getBestPop(){
-        return this.bestPop;
+    public Individual[] getbestPop(Population pop){
+        for(int i = 0; i < this.bestPop.length; i++){
+            pop.population[ThreadLocalRandom.current().nextInt(pop.population.length)] = this.bestPop[i]; 
+        }
+        return pop.population;
     }
     
 }

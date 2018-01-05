@@ -8,6 +8,7 @@ import geneticalgorithm.problem.ProblemInterface;
 import geneticalgorithm.problem.ProblemUtility;
 import geneticalgorithm.selections.RankSelection;
 import geneticalgorithm.selections.TournamentSelection;
+import geneticalgorithm.strategies.ElitismStrategy;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -33,24 +34,27 @@ public class OneMaxProblem {
         RandomStringMutation mutation = new RandomStringMutation(0.005, 0, 1, fitnessFunction);
         Population pop = new Population(OneMaxProblem.createRandomPopulation(), crossover);
         int generation = 0;
+        ElitismStrategy eliteStrategy = new ElitismStrategy(20);
         while(true){
-        pop.population = pop.crossover(tournament);
-        pop.population = pop.mutate(mutation);
-        pop.bestFitness = utilities.getBestFitnessMax(pop);
-        System.out.println(pop.bestFitness);
-        if (pop.bestFitness == lengthOfProblem){
-            System.out.println("Solution found in generation: " + generation);
-            break;
-        }
-        printPopulation(pop);
-        try{
-            System.out.println(generation + "   " + pop.bestFitness);
-            generation+=1;
-            Thread.sleep(10);
-        }
-        
-        catch (InterruptedException e){
-        }
+            eliteStrategy.Strategy(pop);
+            pop.population = pop.crossover(tournament);
+            pop.population = pop.mutate(mutation);
+            pop.population = eliteStrategy.getbestPop(pop);
+            pop.bestFitness = utilities.getBestFitnessMax(pop);
+            System.out.println(pop.bestFitness);
+            if (pop.bestFitness == lengthOfProblem){
+                System.out.println("Solution found in generation: " + generation);
+                break;
+            }
+            printPopulation(pop);
+            try{
+                System.out.println(generation + "   " + pop.bestFitness);
+                generation+=1;
+                Thread.sleep(10);
+            }
+
+            catch (InterruptedException e){
+            }
         
       }
         
