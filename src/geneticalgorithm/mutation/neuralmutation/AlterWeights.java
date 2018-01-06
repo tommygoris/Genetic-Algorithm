@@ -41,12 +41,13 @@ public class AlterWeights implements MutationInterface {
                 newPop[ind] = pop.population[ind];
                 continue;
             }
-            
             int numberOfNodes = net.inputs.length;
-            
-            for (Node[] array : net.hiddenNodes){
-                numberOfNodes += array.length;
+            if (net.hiddenNodes != null && net.hiddenNodes.length > 0){
+                for (int i = 0; i < net.hiddenNodes.length; i++){
+                    numberOfNodes += net.hiddenNodes[i].length;
+                }
             }
+            
             int getNode = ThreadLocalRandom.current().nextInt(numberOfNodes);
 
             

@@ -12,6 +12,7 @@ import geneticalgorithm.examples.evolveann.EvolveNeuralNetworkTest;
 import geneticalgorithm.examples.evolveann.NeuralNetworkFitnessFunction;
 import geneticalgorithm.examples.evolveann.NeuralNetworkUtilities;
 import geneticalgorithm.mutation.neuralmutation.AddNode;
+import geneticalgorithm.mutation.neuralmutation.AlterWeights;
 import geneticalgorithm.mutation.neuralmutation.DeleteNode;
 import geneticalgorithm.neuralnetwork.NeuralNetwork;
 import geneticalgorithm.problem.ProblemInterface;
@@ -19,6 +20,7 @@ import geneticalgorithm.problem.ProblemUtility;
 import geneticalgorithm.selections.TournamentSelection;
 import geneticalgorithm.strategies.ElitismStrategy;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import javafx.util.Pair;
@@ -28,8 +30,8 @@ import javafx.util.Pair;
  * @author TommyGoris
  */
 public class SinWaveNeuralNetwork{
-    private static final int populationSize = 15;
-    private static final int inputSize = 50;
+    private static final int populationSize = 1000;
+    private static final int inputSize = 50000;
     private static final int startingNodes = 1;
     private static final int outputNodes = 1;
     private static SinWaveFitnessFunction fitnessFunction = null;
@@ -40,12 +42,13 @@ public class SinWaveNeuralNetwork{
         List<Double[]> inputList = inputOutput.getKey();
         List<Double> outputList = inputOutput.getValue();
         fitnessFunction = new SinWaveFitnessFunction(outputList.toArray(new Double[0]), inputList.toArray(new Double[0][0]));
-        TournamentSelection tournament = new TournamentSelection(7, .80);
-        NeuralNetworkCrossover crossover = new NeuralNetworkCrossover(fitnessFunction, .80);
-        AddNode addMutation = new AddNode(fitnessFunction, 0.25);
-        DeleteNode deleteMutation = new DeleteNode(fitnessFunction, 0.1);
+        TournamentSelection tournament = new TournamentSelection(7, .95);
+        NeuralNetworkCrossover crossover = new NeuralNetworkCrossover(fitnessFunction, .95);
+        AddNode addMutation = new AddNode(fitnessFunction, 0.05);
+        DeleteNode deleteMutation = new DeleteNode(fitnessFunction, 0.025);
         Population pop = new Population(SinWaveNeuralNetwork.createRandomPopulation(inputOutput.getKey().toArray(new Double[0][0])), crossover);
-        ElitismStrategy eliteStrategy = new ElitismStrategy(10);
+        ElitismStrategy eliteStrategy = new ElitismStrategy(25);
+        AlterWeights alterMutation = new AlterWeights(fitnessFunction, 0.025);
         int generation = 0;
         while(true){
             //pop = NeuralNetworkUtilities.cleanUpHiddenLayer(pop);
@@ -53,8 +56,10 @@ public class SinWaveNeuralNetwork{
             pop.population = pop.crossover(tournament);   
             pop.population = pop.mutate(addMutation);  
             pop.population = pop.mutate(deleteMutation);
+            pop.population = pop.mutate(alterMutation);
             pop.population = eliteStrategy.getbestPop(pop);
             pop.bestFitness = ProblemUtility.getBestFitnessMax(pop);
+            NeuralNetwork net = (NeuralNetwork)pop.population[0].individual;
             System.out.println(pop.bestFitness + " Generation: " + generation);
             if (pop.bestFitness == solution){
                 System.out.println("Solution found in generation: " + generation);
@@ -105,7 +110,7 @@ public class SinWaveNeuralNetwork{
         List<Double> outputList = new ArrayList<>();
         
         for (int i = 0; i<inputSize; i++){
-            double x = ThreadLocalRandom.current().nextDouble(100000000);
+            double x = ThreadLocalRandom.current().nextDouble(1000000000);
             double y = Math.sin(x);
             List<Double> interList = new ArrayList<>();
             Double[] interArray = new Double[1];

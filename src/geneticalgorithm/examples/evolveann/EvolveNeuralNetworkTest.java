@@ -12,11 +12,13 @@ import geneticalgorithm.crossover.neuralcrossover.NeuralNetworkCrossover;
 import geneticalgorithm.examples.nqueens.NQueensProblem;
 import geneticalgorithm.mutation.RandomIntArrayMutation;
 import geneticalgorithm.mutation.neuralmutation.AddNode;
+import geneticalgorithm.mutation.neuralmutation.AlterWeights;
 import geneticalgorithm.mutation.neuralmutation.DeleteNode;
 import geneticalgorithm.neuralnetwork.NeuralNetwork;
 import geneticalgorithm.neuralnetwork.Node;
 import geneticalgorithm.problem.ProblemUtility;
 import geneticalgorithm.selections.TournamentSelection;
+import geneticalgorithm.strategies.ElitismStrategy;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class EvolveNeuralNetworkTest {
     //private static final int lengthOfProblem = 10;
-    private static final int populationSize = 20000;
+    private static final int populationSize = 20;
     private static final int startingNodes = 1;
     private static final int outputNodes = 1;
     private static final int sizeOfWord = 12;
@@ -95,18 +97,22 @@ public class EvolveNeuralNetworkTest {
         finalInputData = inputList.toArray(new Double[0][0]);
         
         fitnessFunction = new NeuralNetworkFitnessFunction(outputList.toArray(new Double[0]), inputList.toArray(new Double[0][0]));
-        TournamentSelection tournament = new TournamentSelection(2, 0.80);
+        TournamentSelection tournament = new TournamentSelection(2, 1.0);
         NeuralNetworkCrossover crossover = new NeuralNetworkCrossover(fitnessFunction, 1);
         AddNode addMutation = new AddNode(fitnessFunction, 0.00005);
         DeleteNode deleteMutation = new DeleteNode(fitnessFunction, 0.00005);
         Population pop = new Population(EvolveNeuralNetworkTest.createRandomPopulation(), crossover);
         int generation = 0;
-        
+        ElitismStrategy eliteStrategy = new ElitismStrategy(1);
+        AlterWeights alterMutation = new AlterWeights(fitnessFunction, 0.0005);
         while(true){
-            pop = NeuralNetworkUtilities.cleanUpHiddenLayer(pop);
+            //pop = NeuralNetworkUtilities.cleanUpHiddenLayer(pop);
+            eliteStrategy.Strategy(pop);
             pop.population = pop.crossover(tournament);   
             pop.population = pop.mutate(addMutation);  
             pop.population = pop.mutate(deleteMutation);
+            pop.population = pop.mutate(alterMutation);
+            pop.population = eliteStrategy.getbestPop(pop);
             pop.bestFitness = ProblemUtility.getBestFitnessMax(pop);
             System.out.println(pop.bestFitness + " Generation: " + generation);
             if (pop.bestFitness == solution){

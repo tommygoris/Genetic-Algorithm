@@ -28,8 +28,6 @@ public class ElitismStrategy {
         Individual[] originalPop = pop.population.clone();
         Arrays.sort(originalPop, Collections.reverseOrder());
         this.bestPop = Arrays.copyOfRange(originalPop, 0, this.savePop);
-        System.out.println(Arrays.toString(this.bestPop));
-        System.out.println(Arrays.toString(pop.population));
     }
     
     public Individual[] getbestPop(Population pop){
