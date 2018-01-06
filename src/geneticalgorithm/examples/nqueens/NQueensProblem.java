@@ -9,6 +9,7 @@ import geneticalgorithm.mutation.RandomIntArrayMutation;
 import geneticalgorithm.mutation.RandomStringMutation;
 import geneticalgorithm.problem.ProblemUtility;
 import geneticalgorithm.selections.TournamentSelection;
+import geneticalgorithm.strategies.ElitismStrategy;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.concurrent.ThreadLocalRandom;
@@ -27,8 +28,8 @@ import javafx.util.Pair;
  */
 public class NQueensProblem {
 
-    private static final int lengthOfProblem = 7;
-    private static final int populationSize = 10;
+    private static final int lengthOfProblem = 20;
+    private static final int populationSize = 100;
     private static final NQueensFitnessFunction fitnessFunction = new NQueensFitnessFunction(lengthOfProblem);
     private static final int solution = (lengthOfProblem)*(lengthOfProblem-1) * 50;
     
@@ -39,13 +40,16 @@ public class NQueensProblem {
         IntArrayCrossover crossover = new IntArrayCrossover(3, fitnessFunction, 0.75);
         RandomIntArrayMutation mutation = new RandomIntArrayMutation(0.05, 0, lengthOfProblem - 1, fitnessFunction);
         Population pop = new Population(NQueensProblem.createRandomPopulation(0, lengthOfProblem - 1), crossover);
+        ElitismStrategy eliteStrategy = new ElitismStrategy(10);
         int generation = 0;
         
         while(true){
-            
+            //eliteStrategy.Strategy(pop);
             pop.population = pop.crossover(tournament);
             pop.population = pop.mutate(mutation);
+            //pop.population = eliteStrategy.getbestPop(pop);
             pop.bestFitness = utilities.getBestFitnessMax(pop);
+            
             System.out.println(pop.bestFitness);
             if (pop.bestFitness == solution){
                 System.out.println("Solution found in generation: " + generation);

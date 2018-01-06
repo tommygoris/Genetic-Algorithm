@@ -17,6 +17,7 @@ import geneticalgorithm.neuralnetwork.NeuralNetwork;
 import geneticalgorithm.problem.ProblemInterface;
 import geneticalgorithm.problem.ProblemUtility;
 import geneticalgorithm.selections.TournamentSelection;
+import geneticalgorithm.strategies.ElitismStrategy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -27,7 +28,7 @@ import javafx.util.Pair;
  * @author TommyGoris
  */
 public class SinWaveNeuralNetwork{
-    private static final int populationSize = 5;
+    private static final int populationSize = 15;
     private static final int inputSize = 50;
     private static final int startingNodes = 1;
     private static final int outputNodes = 1;
@@ -44,12 +45,15 @@ public class SinWaveNeuralNetwork{
         AddNode addMutation = new AddNode(fitnessFunction, 0.25);
         DeleteNode deleteMutation = new DeleteNode(fitnessFunction, 0.1);
         Population pop = new Population(SinWaveNeuralNetwork.createRandomPopulation(inputOutput.getKey().toArray(new Double[0][0])), crossover);
+        ElitismStrategy eliteStrategy = new ElitismStrategy(10);
         int generation = 0;
         while(true){
             //pop = NeuralNetworkUtilities.cleanUpHiddenLayer(pop);
+            eliteStrategy.Strategy(pop);
             pop.population = pop.crossover(tournament);   
             pop.population = pop.mutate(addMutation);  
             pop.population = pop.mutate(deleteMutation);
+            pop.population = eliteStrategy.getbestPop(pop);
             pop.bestFitness = ProblemUtility.getBestFitnessMax(pop);
             System.out.println(pop.bestFitness + " Generation: " + generation);
             if (pop.bestFitness == solution){
