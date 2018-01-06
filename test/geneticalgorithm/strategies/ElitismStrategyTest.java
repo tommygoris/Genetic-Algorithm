@@ -71,7 +71,7 @@ public class ElitismStrategyTest {
         System.out.println("getBestPop");
         ElitismStrategy instance = null;
         Individual[] expResult = null;
-        Individual[] result = instance.getBestPop();
+        Individual[] result = instance.getbestPop(pop);
         assertArrayEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
