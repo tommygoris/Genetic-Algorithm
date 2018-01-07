@@ -20,7 +20,7 @@ public class NeuralNetwork {
      public Node[] outputs;
      public Node[][] hiddenNodes;
      public Node[] bias;
-     private double biasValue = 1;
+     private final double biasValue = 1;
      
      public NeuralNetwork(Node[] inputs, Node[] outputs, Node[][] hiddenNodes){
          this.inputs = inputs;
