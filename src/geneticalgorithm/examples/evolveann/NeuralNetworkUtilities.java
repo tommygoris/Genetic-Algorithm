@@ -8,6 +8,7 @@ package geneticalgorithm.examples.evolveann;
 import geneticalgorithm.Population;
 import geneticalgorithm.neuralnetwork.NeuralNetwork;
 import geneticalgorithm.neuralnetwork.Node;
+import geneticalgorithm.neuralnetwork.recurrentneuralnetworks.RecurrentNeuralNetwork;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -95,6 +96,18 @@ public class NeuralNetworkUtilities {
             }
         }
         return net;
+    }
+    
+    public static RecurrentNeuralNetwork InitRecurrentNodes(NeuralNetwork net){
+        RecurrentNeuralNetwork rNet = new RecurrentNeuralNetwork();
+        
+        rNet.hiddenNodes = net.hiddenNodes;
+        rNet.inputs = net.inputs;
+        rNet.outputs = net.outputs;
+        rNet.bias = net.bias;
+        
+        
+        return rNet;
     }
     
     public static boolean checkNet(NeuralNetwork firstNet, NeuralNetwork secondNet){

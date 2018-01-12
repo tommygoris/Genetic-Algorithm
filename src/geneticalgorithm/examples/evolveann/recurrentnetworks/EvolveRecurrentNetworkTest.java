@@ -15,7 +15,6 @@ import geneticalgorithm.neuralnetwork.recurrentneuralnetworks.RecurrentNeuralNet
 public class EvolveRecurrentNetworkTest {
     
     public static void main(String[] args){
-        RecurrentNeuralNetwork net = new RecurrentNeuralNetwork(new Node[5][5]);
-        net.
+        RecurrentNeuralNetwork net = new RecurrentNeuralNetwork();
     }
 }
