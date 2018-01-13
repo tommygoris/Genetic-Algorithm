@@ -36,7 +36,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class EvolveNeuralNetworkTest {
     //private static final int lengthOfProblem = 10;
-    private static final int populationSize = 20;
+    private static final int populationSize = 2000;
     private static final int startingNodes = 1;
     private static final int outputNodes = 1;
     private static final int sizeOfWord = 12;
@@ -97,13 +97,14 @@ public class EvolveNeuralNetworkTest {
         finalInputData = inputList.toArray(new Double[0][0]);
         
         fitnessFunction = new NeuralNetworkFitnessFunction(outputList.toArray(new Double[0]), inputList.toArray(new Double[0][0]));
-        TournamentSelection tournament = new TournamentSelection(2, 1.0);
+        TournamentSelection tournament = new TournamentSelection(7, 0.75);
         NeuralNetworkCrossover crossover = new NeuralNetworkCrossover(fitnessFunction, 1);
         AddNode addMutation = new AddNode(fitnessFunction, 0.00005);
         DeleteNode deleteMutation = new DeleteNode(fitnessFunction, 0.00005);
-        Population pop = new Population(EvolveNeuralNetworkTest.createRandomPopulation(), crossover);
+        EvolveNeuralNetworkPopulation randomPopulation = new EvolveNeuralNetworkPopulation(populationSize, startingNodes, inputEnglishData[0].length, outputNodes, fitnessFunction);
+        Population pop = new Population(randomPopulation, crossover, 200);
         int generation = 0;
-        ElitismStrategy eliteStrategy = new ElitismStrategy(1);
+        ElitismStrategy eliteStrategy = new ElitismStrategy(50);
         AlterWeights alterMutation = new AlterWeights(fitnessFunction, 0.0005);
         while(true){
             //pop = NeuralNetworkUtilities.cleanUpHiddenLayer(pop);
@@ -132,34 +133,6 @@ public class EvolveNeuralNetworkTest {
       }
         
         
-    }
-    
-    private static Individual[] createRandomPopulation(){
-        Individual[] randomPop = new Individual[EvolveNeuralNetworkTest.populationSize];
-        for (int i = 0; i<randomPop.length; i++){
-            randomPop[i] = EvolveNeuralNetworkTest.createRandomIndividual();
-        }
-        return randomPop;
-    }
-    
-    private static Individual createRandomIndividual(){
-        Individual ind = null;
-        List<Integer> listPop = new ArrayList<>();
-        NeuralNetwork net = new NeuralNetwork();
-        net = NeuralNetworkUtilities.initTree(net, EvolveNeuralNetworkTest.inputEnglishData[0], EvolveNeuralNetworkTest.outputNodes);
-        
-        int numOfNodes = ThreadLocalRandom.current().nextInt(EvolveNeuralNetworkTest.startingNodes);
-        for (int i = 0; i<numOfNodes; i++){
-            int nodes = ThreadLocalRandom.current().nextInt(1, EvolveNeuralNetworkTest.startingNodes);
-            listPop.add(nodes);
-            numOfNodes -= nodes;            
-        }    
-        //System.out.println(Arrays.toString(listPop.stream().mapToInt(i->i).toArray()));
-        net = NeuralNetworkUtilities.addHiddenNodes(net, listPop.stream().mapToInt(i->i).toArray());      
-        
-        net.createBias();
-        
-        return new Individual(net, (double)fitnessFunction.fitnessFunction(net));
     }
 
     public static void check(Population pop, String location){

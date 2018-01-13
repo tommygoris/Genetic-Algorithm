@@ -38,8 +38,9 @@ public class NQueensProblem {
         ProblemUtility utilities = new ProblemUtility();  
         TournamentSelection tournament = new TournamentSelection(7, 0.75);
         IntArrayCrossover crossover = new IntArrayCrossover(3, fitnessFunction, 0.75);
-        RandomIntArrayMutation mutation = new RandomIntArrayMutation(0.05, 0, lengthOfProblem - 1, fitnessFunction);
-        Population pop = new Population(NQueensProblem.createRandomPopulation(0, lengthOfProblem - 1), crossover);
+        NQueensPopulation randomPopulation = new NQueensPopulation(populationSize, lengthOfProblem, fitnessFunction);
+        RandomIntArrayMutation mutation = new RandomIntArrayMutation(0.05, 0, lengthOfProblem, fitnessFunction);
+        Population pop = new Population(randomPopulation.createRandomPopulation(), crossover);
         ElitismStrategy eliteStrategy = new ElitismStrategy(10);
         int generation = 0;
         
@@ -69,23 +70,6 @@ public class NQueensProblem {
             }
 
           }
-    }
-    
-    public static Individual[] createRandomPopulation(int lowerBound, int upperBound){
-        Individual[] population = new Individual[NQueensProblem.populationSize];
-        for (int i = 0; i <populationSize; i++){
-            population[i] = NQueensProblem.createRandomIndividual(lowerBound, upperBound);    
-        }
-        return population;
-    }
-    
-    private static Individual createRandomIndividual(int lowerBound, int upperBound){
-        int[] newIndividual = new int[NQueensProblem.lengthOfProblem];
-        for (int i = 0; i<NQueensProblem.lengthOfProblem; i++){
-            newIndividual[i] = ThreadLocalRandom.current().nextInt(lowerBound, upperBound + 1);
-        }
-        double fitness = (double) NQueensProblem.fitnessFunction.fitnessFunction(newIndividual);
-        return new Individual(newIndividual, fitness);
     }
     
     private static void printPopulation(Population pop){

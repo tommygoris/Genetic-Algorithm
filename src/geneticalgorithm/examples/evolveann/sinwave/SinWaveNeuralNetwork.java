@@ -46,7 +46,8 @@ public class SinWaveNeuralNetwork{
         NeuralNetworkCrossover crossover = new NeuralNetworkCrossover(fitnessFunction, .95);
         AddNode addMutation = new AddNode(fitnessFunction, 0.05);
         DeleteNode deleteMutation = new DeleteNode(fitnessFunction, 0.025);
-        Population pop = new Population(SinWaveNeuralNetwork.createRandomPopulation(inputOutput.getKey().toArray(new Double[0][0])), crossover);
+        SinWaveRandomPopulation randomPopulation = new SinWaveRandomPopulation(populationSize, startingNodes, 1, 1, fitnessFunction);
+        Population pop = new Population(randomPopulation.createRandomPopulation(), crossover);
         ElitismStrategy eliteStrategy = new ElitismStrategy(25);
         AlterWeights alterMutation = new AlterWeights(fitnessFunction, 0.025);
         int generation = 0;
@@ -75,34 +76,6 @@ public class SinWaveNeuralNetwork{
             catch (InterruptedException e){
             }
         }
-    }
-    
-    private static Individual[] createRandomPopulation(Double[][] inputData){
-        Individual[] randomPop = new Individual[SinWaveNeuralNetwork.populationSize];
-        for (int i = 0; i<randomPop.length; i++){
-            randomPop[i] = SinWaveNeuralNetwork.createRandomIndividual(inputData);
-        }
-        return randomPop;
-    }
-    
-    private static Individual createRandomIndividual(Double[][] inputData){
-        Individual ind = null;
-        List<Integer> listPop = new ArrayList<>();
-        NeuralNetwork net = new NeuralNetwork();
-        net = NeuralNetworkUtilities.initTree(net, inputData[0], SinWaveNeuralNetwork.outputNodes);
-        
-        int numOfNodes = ThreadLocalRandom.current().nextInt(SinWaveNeuralNetwork.startingNodes);
-        for (int i = 0; i<numOfNodes; i++){
-            int nodes = ThreadLocalRandom.current().nextInt(1, SinWaveNeuralNetwork.startingNodes);
-            listPop.add(nodes);
-            numOfNodes -= nodes;            
-        }    
-        //System.out.println(Arrays.toString(listPop.stream().mapToInt(i->i).toArray()));
-        net = NeuralNetworkUtilities.addHiddenNodes(net, listPop.stream().mapToInt(i->i).toArray());      
-        
-        net.createBias();
-        
-        return new Individual(net, (double)fitnessFunction.fitnessFunction(net));
     }
     
     private static Pair<List<Double[]>, List<Double>> createSinData(){

@@ -8,6 +8,7 @@ package geneticalgorithm;
 import geneticalgorithm.crossover.CrossoverInterface;
 import geneticalgorithm.crossover.CrossoverSelector;
 import geneticalgorithm.mutation.MutationInterface;
+import geneticalgorithm.problem.RandomPopulationInterface;
 import geneticalgorithm.selections.IndividualSelector;
 import geneticalgorithm.selections.SelectionInterface;
 
@@ -21,11 +22,20 @@ public class Population{
     public Individual bestIndividual;
     private final IndividualSelector Individualselector;
     private final CrossoverSelector crossoverSelector;
-    
+    private int introduceRandomPop = 0;
+    private RandomPopulationInterface randomPopulation;
     public Population(Individual[] pop, CrossoverInterface crossoverAlgorithm){
         this.population = pop;
         Individualselector = new IndividualSelector();
         this.crossoverSelector = new CrossoverSelector(crossoverAlgorithm);
+    }
+    
+    public Population(RandomPopulationInterface randomPopulation, CrossoverInterface crossoverAlgorithm, int introduceRandomPop){
+        this.randomPopulation = randomPopulation;
+        this.population = randomPopulation.createRandomPopulation();
+        Individualselector = new IndividualSelector();
+        this.crossoverSelector = new CrossoverSelector(crossoverAlgorithm);
+        this.introduceRandomPop = introduceRandomPop;
     }
     
     //// Returns a new mutated population.
@@ -39,10 +49,21 @@ public class Population{
     public Individual[] crossover(SelectionInterface selection){
         Individual[] newIndividualsPopulation = new Individual[this.population.length];
         
-        for (int i = 0; i < this.population.length; i++){
+        for (int i = 0; i < this.population.length - introduceRandomPop; i++){
             Individual firstIndividual = this.selectIndividual(selection);
             Individual secondIndividual = this.selectIndividual(selection);
             newIndividualsPopulation[i] = this.crossoverSelector.crossover(firstIndividual, secondIndividual);
+        }
+        
+        newIndividualsPopulation = this.randomPop(newIndividualsPopulation);
+        return newIndividualsPopulation;
+    }
+    
+    public Individual[] randomPop(Individual[] newIndividualsPopulation){
+        if (introduceRandomPop != 0){
+            for (int i = introduceRandomPop; i < this.population.length; i++){
+                newIndividualsPopulation[i] = randomPopulation.createRandomIndividual();
+            }
         }
         return newIndividualsPopulation;
     }
