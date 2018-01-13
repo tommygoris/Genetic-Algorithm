@@ -24,16 +24,22 @@ public class Pawn implements ChessPieceInterface{
     public Pawn(int x, int y, String color){
         startingPosition = new Pair<>(x,y);
         currentPosition = new Pair<>(x,y);
-        
-        this.possibleMoves = new ArrayList<>();
-        this.possibleMoves.add(new Pair<>(0,2));
-        this.possibleMoves.add(new Pair<>(0,1));
         this.color = color;
+        possibleMoves = new ArrayList<>();
+        if (color.equals("White")){
+            this.possibleMoves.add(ChessMovement.moveNorthTwo);
+            this.possibleMoves.add(ChessMovement.moveNorth);
+        }
+        else{
+            this.possibleMoves.add(ChessMovement.moveSouth);
+            this.possibleMoves.add(ChessMovement.moveSouthTwo);
+        }
         
     }
     
     @Override
     public void UpdateMoves(ChessBoard board){
+        this.possibleMoves = new ArrayList<>();        
         if (this.color.equals("White")){
             this.UpdateWhite(board);
         }
@@ -43,15 +49,27 @@ public class Pawn implements ChessPieceInterface{
     }
     
     private void UpdateBlack(ChessBoard board){
+        if (this.startingPosition.equals(currentPosition) && board.canMove(ChessMovement.moveSouthTwo)){
+            this.possibleMoves.add(ChessMovement.moveSouthTwo);
+        }
         
+        if (board.canMove(ChessMovement.moveSouth)){
+            this.possibleMoves.add(ChessMovement.moveSouth);
+        }
+        if (board.canCapture(ChessMovement.moveSouthEast)){
+            this.possibleMoves.add(ChessMovement.moveSouthEast);
+        }
+        
+        if (board.canCapture(ChessMovement.moveSouthWest)){
+            this.possibleMoves.add(ChessMovement.moveSouthWest);
+        }
+        
+        if (board.EnPassantPawnLocation(this.currentPosition, this.color) != null){
+            this.possibleMoves.add(board.EnPassantPawnLocation(this.currentPosition, this.color));
+        } 
     }
     
     private void UpdateWhite(ChessBoard board){
-        int currentX = this.currentPosition.getKey();
-        int currentY = this.currentPosition.getValue();
-        
-        this.possibleMoves = new ArrayList<>();
-        
         if (this.startingPosition.equals(currentPosition) && board.canMove(ChessMovement.moveNorthTwo)){
             this.possibleMoves.add(ChessMovement.moveNorthTwo);
         }
@@ -67,9 +85,13 @@ public class Pawn implements ChessPieceInterface{
             this.possibleMoves.add(ChessMovement.moveNorthWest);
         }
         
-        if (board.canEnPassantPawn(this.currentPosition, this.color)){
-
+        if (board.EnPassantPawnLocation(this.currentPosition, this.color) != null){
+            this.possibleMoves.add(board.EnPassantPawnLocation(this.currentPosition, this.color));
         } 
+    }
+    
+    private void PromotePawn(){
+        
     }
     
     @Override

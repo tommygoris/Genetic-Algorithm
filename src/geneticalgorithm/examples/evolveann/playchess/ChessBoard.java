@@ -30,27 +30,49 @@ public class ChessBoard {
         return (x < 8 && y < 8 && x > 0 && y > 0) && !chessBoard[x][y].taken;
     }
     
+    public boolean canCapture(int x, int y){
+        return (x < 8 && y < 8 && x > 0 && y > 0) && chessBoard[x][y].taken;
+    }
+    
     public boolean canCapture(Pair<Integer, Integer> pair){
         int x = pair.getKey();
         int y = pair.getValue();
         return (x < 8 && y < 8 && x > 0 && y > 0) && chessBoard[x][y].taken;
     }
     
-    public boolean canEnPassantPawn(Pair<Integer, Integer> currentPosition, String color){
+    public Pair<Integer, Integer> EnPassantPawnLocation(Pair<Integer, Integer> currentPosition, String color){
         int x = currentPosition.getKey();
         int y = currentPosition.getValue();
         
         if (this.chessBoard[x - 1][y].chessPiece instanceof Pawn){
             Pawn pawn = (Pawn)this.chessBoard[x - 1][y].chessPiece;
-            if (pawn.pastMoves.size() == 1){
+            if (pawn.pastMoves.size() == 1 && !pawn.color.equals(color)){
+                    
+                Pair<Integer, Integer> prevMove = pawn.pastMoves.get(0);                    
+                int prevX = prevMove.getKey();                    
+                int prevY = prevMove.getValue();
+                if (pawn.color.equals("Black") && prevX == 0 && prevY == -2){
+                    return ChessMovement.moveNorthWest;
+                }
+                else if (pawn.color.equals("White") && prevX == 0 && prevY == 2){
+                    return ChessMovement.moveSouthWest;
+                }
+            }            
+        }
+        else if (this.canCapture(x + 1, y) && this.chessBoard[x + 1][y].chessPiece instanceof Pawn){
+            Pawn pawn = (Pawn)this.chessBoard[x + 1][y].chessPiece;
+            if (pawn.pastMoves.size() == 1 && !pawn.color.equals(color)){
                 Pair<Integer, Integer> prevMove = pawn.pastMoves.get(0);
                 int prevX = prevMove.getKey();
                 int prevY = prevMove.getValue();
-                if (prevX == 0 && prevY == 2){
-                    
+                if (pawn.color.equals("Black") && prevX == 0 && prevY == -2){
+                    return ChessMovement.moveNorthEast;
+                }
+                else if (pawn.color.equals("White") && prevX == 0 && prevY == 2){
+                    return ChessMovement.moveSouthEast;
                 }
             }
         }
-        return false;
+        return null;
     }
 }
