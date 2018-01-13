@@ -32,7 +32,8 @@ public class OneMaxProblem {
         TournamentSelection tournament = new TournamentSelection(7, 0.95);
         StringCrossover crossover = new StringCrossover(199, fitnessFunction, 1);
         RandomStringMutation mutation = new RandomStringMutation(0.005, 0, 1, fitnessFunction);
-        Population pop = new Population(OneMaxProblem.createRandomPopulation(), crossover);
+        OneMaxPopulation randomPopulation = new OneMaxPopulation(populationSize, lengthOfProblem, fitnessFunction);
+        Population pop = new Population(randomPopulation, crossover, 50);
         int generation = 0;
         ElitismStrategy eliteStrategy = new ElitismStrategy(20);
         while(true){
@@ -58,23 +59,6 @@ public class OneMaxProblem {
         
       }
         
-    }
-    
-    public static Individual[] createRandomPopulation(){
-        Individual[] population = new Individual[OneMaxProblem.populationSize];
-        for (int i = 0; i <populationSize; i++){
-            population[i] = OneMaxProblem.createRandomIndividual();    
-        }
-        return population;
-    }
-    
-    private static Individual createRandomIndividual(){
-        StringBuilder oneMax = new StringBuilder();
-        for (int i = 0; i<OneMaxProblem.lengthOfProblem; i++){
-            oneMax.append(ThreadLocalRandom.current().nextDouble() > 0.5 ? 1 : 0);
-        }
-        double fitness = (double) OneMaxProblem.fitnessFunction.fitnessFunction(oneMax.toString());
-        return new Individual(oneMax.toString(), fitness);
     }
     
     private static void printPopulation(Population pop){

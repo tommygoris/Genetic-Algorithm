@@ -34,7 +34,7 @@ public class RandomIntArrayMutation implements MutationInterface{
             int[] currentIndividual = (int[])pop.population[i].individual;
             for (int j = 0; j < currentIndividual.length; j++){
                 currentIndividual[j] = (ThreadLocalRandom.current().nextDouble() < this.mutationRate) ? 
-                        ThreadLocalRandom.current().nextInt(this.lowerBound, this.upperBound + 1) : currentIndividual[j];
+                        ThreadLocalRandom.current().nextInt(this.lowerBound, this.upperBound) : currentIndividual[j];
             }
             double fitness = (double)this.fitnessFunction.fitnessFunction(currentIndividual);
             Individual<int[]> newIndividual = new Individual<>(currentIndividual, fitness);
