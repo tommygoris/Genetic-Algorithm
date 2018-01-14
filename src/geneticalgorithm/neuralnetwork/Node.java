@@ -28,10 +28,6 @@ public class Node{
         public Node(){
             this.val = ThreadLocalRandom.current().nextGaussian();
         }
-
-    public Node(Node[][] hiddenNodes) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
         
     @Override
     public boolean equals(Object obj){
