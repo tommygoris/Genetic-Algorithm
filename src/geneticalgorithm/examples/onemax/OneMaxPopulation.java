@@ -25,6 +25,7 @@ public class OneMaxPopulation implements RandomPopulationInterface {
     }
     
     
+    @Override
     public Individual[] createRandomPopulation(){
         Individual[] population = new Individual[populationSize];
         for (int i = 0; i <populationSize; i++){
@@ -33,6 +34,7 @@ public class OneMaxPopulation implements RandomPopulationInterface {
         return population;
     }
     
+    @Override
     public Individual createRandomIndividual(){
         StringBuilder oneMax = new StringBuilder();
         for (int i = 0; i<lengthOfProblem; i++){

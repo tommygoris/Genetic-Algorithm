@@ -34,6 +34,7 @@ public class EvolveNeuralNetworkPopulation implements RandomPopulationInterface 
         this.fitnessFunction = fitnessFunction;
     }
     
+    @Override
     public Individual[] createRandomPopulation(){
         Individual[] randomPop = new Individual[populationSize];
         for (int i = 0; i<randomPop.length; i++){
@@ -42,6 +43,7 @@ public class EvolveNeuralNetworkPopulation implements RandomPopulationInterface 
         return randomPop;
     }
     
+    @Override
     public Individual createRandomIndividual(){
         List<Integer> listPop = new ArrayList<>();
         NeuralNetwork net = new NeuralNetwork();

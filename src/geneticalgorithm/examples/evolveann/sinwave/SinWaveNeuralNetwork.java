@@ -47,7 +47,7 @@ public class SinWaveNeuralNetwork{
         AddNode addMutation = new AddNode(fitnessFunction, 0.05);
         DeleteNode deleteMutation = new DeleteNode(fitnessFunction, 0.025);
         SinWaveRandomPopulation randomPopulation = new SinWaveRandomPopulation(populationSize, startingNodes, 1, 1, fitnessFunction);
-        Population pop = new Population(randomPopulation.createRandomPopulation(), crossover);
+        Population pop = new Population(randomPopulation, crossover, 100);
         ElitismStrategy eliteStrategy = new ElitismStrategy(25);
         AlterWeights alterMutation = new AlterWeights(fitnessFunction, 0.025);
         int generation = 0;

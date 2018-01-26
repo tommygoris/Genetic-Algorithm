@@ -24,6 +24,7 @@ public class NQueensPopulation implements RandomPopulationInterface {
         this.fitnessFunction = fitnessFunction;
     }
     
+    @Override
     public Individual[] createRandomPopulation(){
         Individual[] population = new Individual[populationSize];
         for (int i = 0; i <populationSize; i++){
@@ -32,6 +33,7 @@ public class NQueensPopulation implements RandomPopulationInterface {
         return population;
     }
     
+    @Override
     public Individual createRandomIndividual(){
         int[] newIndividual = new int[lengthOfProblem];
         for (int i = 0; i<lengthOfProblem; i++){
