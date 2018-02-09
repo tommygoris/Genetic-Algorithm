@@ -24,7 +24,6 @@ public class NeuralNetworkFitnessFunction implements ProblemInterface {
         this.input = input;
     }
     
-    private final int bias = 1;
     @Override
     public Object fitnessFunction(Object value) {
         NeuralNetwork network = (NeuralNetwork)value;

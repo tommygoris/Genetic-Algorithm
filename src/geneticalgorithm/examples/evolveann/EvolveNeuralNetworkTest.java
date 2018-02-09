@@ -98,13 +98,13 @@ public class EvolveNeuralNetworkTest {
         
         fitnessFunction = new NeuralNetworkFitnessFunction(outputList.toArray(new Double[0]), inputList.toArray(new Double[0][0]));
         TournamentSelection tournament = new TournamentSelection(7, 0.75);
-        NeuralNetworkCrossover crossover = new NeuralNetworkCrossover(fitnessFunction, 1);
+        NeuralNetworkCrossover crossover = new NeuralNetworkCrossover(fitnessFunction, 0.5);
         AddNode addMutation = new AddNode(fitnessFunction, 0.00005);
         DeleteNode deleteMutation = new DeleteNode(fitnessFunction, 0.00005);
         EvolveNeuralNetworkPopulation randomPopulation = new EvolveNeuralNetworkPopulation(populationSize, startingNodes, inputEnglishData[0].length, outputNodes, fitnessFunction);
         Population pop = new Population(randomPopulation, crossover, 1000);
         int generation = 0;
-        ElitismStrategy eliteStrategy = new ElitismStrategy(200);
+        ElitismStrategy eliteStrategy = new ElitismStrategy(50);
         AlterWeights alterMutation = new AlterWeights(fitnessFunction, 0.0005);
         while(true){
             //pop = NeuralNetworkUtilities.cleanUpHiddenLayer(pop);

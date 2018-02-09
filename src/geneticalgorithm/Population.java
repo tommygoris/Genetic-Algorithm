@@ -24,12 +24,21 @@ public class Population{
     private final CrossoverSelector crossoverSelector;
     private int introduceRandomPop = 0;
     private RandomPopulationInterface randomPopulation;
+    
+    /* Standard constructor.
+    * Create a population given the population, as well as the type of crossover.
+    */
     public Population(Individual[] pop, CrossoverInterface crossoverAlgorithm){
         this.population = pop;
         Individualselector = new IndividualSelector();
         this.crossoverSelector = new CrossoverSelector(crossoverAlgorithm);
     }
     
+    /* This constructor is used to constantly add random population into the population at each generation.
+    *  We pass in a RandomPopulationInterface which defines how many individuals in our population we want to replace.
+    *  For example, if we want to introduce 20 random individuals per generation, we create a RandomPopulationInterface
+    *  with a value of 20 to replace 20 individuals per generation with random individuals.
+    */
     public Population(RandomPopulationInterface randomPopulation, CrossoverInterface crossoverAlgorithm, int introduceRandomPop){
         this.randomPopulation = randomPopulation;
         this.population = randomPopulation.createRandomPopulation();
