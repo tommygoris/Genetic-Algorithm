@@ -19,6 +19,7 @@ import geneticalgorithm.problem.ProblemInterface;
 import geneticalgorithm.problem.ProblemUtility;
 import geneticalgorithm.selections.TournamentSelection;
 import geneticalgorithm.strategies.ElitismStrategy;
+import geneticalgorithm.xml.XMLWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -60,7 +61,8 @@ public class SinWaveNeuralNetwork{
             pop.population = pop.mutate(alterMutation);
             pop.population = eliteStrategy.getbestPop(pop);
             pop.bestFitness = ProblemUtility.getBestFitnessMax(pop);
-            NeuralNetwork net = (NeuralNetwork)pop.population[0].individual;
+            XMLWriter write = new XMLWriter();
+            write.writeNeuralNetwork((NeuralNetwork)pop.bestIndividual.individual,pop.bestFitness + "", "SinWave" );
             System.out.println(pop.bestFitness + " Generation: " + generation);
             if (pop.bestFitness == solution){
                 System.out.println("Solution found in generation: " + generation);
