@@ -3,18 +3,37 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/TommyGoris/Desktop/Genetic-Algorithm/src/geneticalgorithm/examples/nqueens/NQueensProblem.java</file>
-            <file>file:/C:/Users/TommyGoris/Desktop/Genetic-Algorithm/test/geneticalgorithm/mutation/neuralmutation/AddNodeTest.java</file>
-            <file>file:/C:/Users/TommyGoris/Desktop/Genetic-Algorithm/src/geneticalgorithm/examples/evolveann/NeuralNetworkFitnessFunction.java</file>
-            <file>file:/C:/Users/TommyGoris/Desktop/Genetic-Algorithm/src/geneticalgorithm/mutation/neuralmutation/AddNode.java</file>
-            <file>file:/C:/Users/TommyGoris/Desktop/Genetic-Algorithm/src/geneticalgorithm/mutation/neuralmutation/DeleteNode.java</file>
-            <file>file:/C:/Users/TommyGoris/Desktop/Genetic-Algorithm/src/geneticalgorithm/examples/evolveann/DrawNeuralNetwork.java</file>
-            <file>file:/C:/Users/TommyGoris/Desktop/Genetic-Algorithm/src/geneticalgorithm/crossover/neuralcrossover/NeuralNetworkCrossover.java</file>
-            <file>file:/C:/Users/TommyGoris/Desktop/Genetic-Algorithm/src/geneticalgorithm/neuralnetwork/Node.java</file>
-            <file>file:/C:/Users/TommyGoris/Desktop/Genetic-Algorithm/src/geneticalgorithm/examples/evolveann/EvolveNeuralNetwork.java</file>
-            <file>file:/C:/Users/TommyGoris/Desktop/Genetic-Algorithm/src/geneticalgorithm/examples/evolveann/NeuralNetworkUtilities.java</file>
-            <file>file:/C:/Users/TommyGoris/Desktop/Genetic-Algorithm/src/geneticalgorithm/neuralnetwork/NeuralNetwork.java</file>
-            <file>file:/C:/Users/TommyGoris/Desktop/Genetic-Algorithm/src/geneticalgorithm/Population.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/problem/ProblemUtility.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/strategies/ElitismStrategy.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/mutation/RandomIntArrayMutation.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/mutation/neuralmutation/DeleteNode.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/examples/evolveann/NeuralNetworkUtilities.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/selections/RankSelection.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/examples/evolveann/EvolveNeuralNetworkTest.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/neuralnetwork/Node.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/neuralnetwork/NeuralNetwork.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/examples/onemax/OneMaxFitnessFunction.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/selections/SelectionInterface.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/mutation/neuralmutation/AddNode.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/crossover/IntArrayCrossover.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/selections/IndividualSelector.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/selections/TournamentSelection.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/examples/evolveann/EvolveNeuralNetworkPopulation.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/examples/nqueens/NQueensPopulation.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/examples/nqueens/NQueensProblem.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/crossover/CrossoverInterface.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/examples/nqueens/NQueensFitnessFunction.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/Population.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/Individual.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/mutation/neuralmutation/AlterWeights.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/examples/evolveann/sinwave/SinWaveFitnessFunction.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/problem/ProblemInterface.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/examples/evolveann/sinwave/SinWaveRandomPopulation.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/examples/onemax/OneMaxProblem.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/selections/IndividualComparator.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/examples/onemax/OneMaxPopulation.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/mutation/RandomStringMutation.java</file>
+            <file>file:/C:/Users/Tommy/Desktop/Genetic%20Algorithm/src/geneticalgorithm/examples/evolveann/sinwave/SinWaveNeuralNetwork.java</file>
         </group>
     </open-files>
 </project-private>
