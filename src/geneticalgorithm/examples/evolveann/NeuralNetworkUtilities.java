@@ -8,6 +8,7 @@ package geneticalgorithm.examples.evolveann;
 import geneticalgorithm.Population;
 import geneticalgorithm.neuralnetwork.NeuralNetwork;
 import geneticalgorithm.neuralnetwork.Node;
+import geneticalgorithm.neuralnetwork.recurrentneuralnetworks.RecurrentNeuralNetwork;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -95,6 +96,39 @@ public class NeuralNetworkUtilities {
             }
         }
         return net;
+    }
+    
+    public static RecurrentNeuralNetwork InitRecurrentNodes(NeuralNetwork net){
+        RecurrentNeuralNetwork rNet = new RecurrentNeuralNetwork();
+        
+        rNet.hiddenNodes = net.hiddenNodes;
+        rNet.inputs = net.inputs;
+        rNet.outputs = net.outputs;
+        rNet.bias = net.bias;
+        
+        rNet.recurrentLayer = new Node[rNet.hiddenNodes.length][];
+        for (int i = 0; i<rNet.recurrentLayer.length; i++){
+            rNet.recurrentLayer[i] = new Node[net.hiddenNodes[i].length];
+        }
+        
+        for (int i = 0; i<rNet.recurrentLayer.length; i++){
+            for (int j = 0; j<rNet.recurrentLayer[i].length; j++){
+                rNet.recurrentLayer[i][j] = new Node(ThreadLocalRandom.current().nextGaussian());
+            }
+        }
+        
+        for (int i = 0; i<rNet.recurrentLayer.length; i++){
+            for (int j = 0; j<rNet.recurrentLayer[i].length; j++){
+                rNet.recurrentLayer[i][j].branch = new Node[rNet.hiddenNodes[i].length];
+                rNet.recurrentLayer[i][j].connection = new double[rNet.hiddenNodes[i].length];
+                
+                for (int f = 0; f<net.hiddenNodes[i].length; f++){
+                    rNet.recurrentLayer[i][j].connection[f] = ThreadLocalRandom.current().nextGaussian();
+                    rNet.recurrentLayer[i][j].branch[f] = rNet.hiddenNodes[i][f];
+                }           
+            }
+        }       
+        return rNet;
     }
     
     public static boolean checkNet(NeuralNetwork firstNet, NeuralNetwork secondNet){
