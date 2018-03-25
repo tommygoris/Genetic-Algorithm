@@ -7,7 +7,7 @@ package geneticalgorithm.mutation.neuralmutation;
 
 import geneticalgorithm.Individual;
 import geneticalgorithm.Population;
-import geneticalgorithm.examples.evolveann.NeuralNetworkUtilities;
+import geneticalgorithm.neuralnetwork.utilities.NeuralNetworkUtilities;
 import geneticalgorithm.mutation.MutationInterface;
 import geneticalgorithm.neuralnetwork.NeuralNetwork;
 import geneticalgorithm.neuralnetwork.Node;

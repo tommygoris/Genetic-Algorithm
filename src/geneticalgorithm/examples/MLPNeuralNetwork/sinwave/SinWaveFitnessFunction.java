@@ -3,32 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package geneticalgorithm.examples.evolveann;
+package geneticalgorithm.examples.MLPNeuralNetwork.sinwave;
 
-import static geneticalgorithm.examples.evolveann.EvolveNeuralNetworkTest.check;
+import geneticalgorithm.examples.MLPNeuralNetwork.wordguess.NeuralNetworkFitnessFunction;
 import geneticalgorithm.neuralnetwork.NeuralNetwork;
 import geneticalgorithm.neuralnetwork.Node;
+import geneticalgorithm.neuralnetwork.utilities.NeuralNetworkInterface;
 import geneticalgorithm.problem.ProblemInterface;
-import java.util.Arrays;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.ArrayList;
 
 /**
  *
- * @author Tommy
+ * @author TommyGoris
  */
-public class NeuralNetworkFitnessFunction implements ProblemInterface {
+public class SinWaveFitnessFunction implements ProblemInterface, NeuralNetworkInterface {
+    
     private final Double[] actual;
     private final Double[][] input;
-    public NeuralNetworkFitnessFunction(Double[] actual, Double[][] input){
+    
+    public SinWaveFitnessFunction(Double[] actual, Double[][] input){
         this.actual = actual;
         this.input = input;
     }
-    
     @Override
     public Object fitnessFunction(Object value) {
         NeuralNetwork network = (NeuralNetwork)value;
         return this.propagate(network);
-    }    
+    }
     
     public double propagate(NeuralNetwork net) {
         double fitness = 0;
@@ -38,31 +39,38 @@ public class NeuralNetworkFitnessFunction implements ProblemInterface {
             }
             if (net.hiddenNodes == null || net.hiddenNodes.length == 0 || (net.hiddenNodes.length == 1 && net.hiddenNodes[0].length == 0)){
                  propagateOneStep(net.inputs, net.outputs, net.bias[0]);
-                 net.outputs = sig(net.outputs);
+                 net.outputs = tanh(net.outputs);
                  
-                if (actual[inputs] > 0.5 && net.outputs[0].val > 0.5){
-                fitness += 1;
+            if (actual[inputs] < 0 && net.outputs[0].val < 0){
+                if ((Math.abs(actual[inputs]) - Math.abs(net.outputs[0].val)) < 0.1 && (Math.abs(actual[inputs]) - Math.abs(net.outputs[0].val)) > -0.1){
+                    fitness += 1;
                 }
-                if (actual[inputs] < 0.5 && net.outputs[0].val < 0.5) {
-                fitness += 1;
+            }
+            if (actual[inputs] > 0 && net.outputs[0].val > 0){
+                if ((Math.abs(actual[inputs]) - Math.abs(net.outputs[0].val)) < 0.1 && (Math.abs(actual[inputs]) - Math.abs(net.outputs[0].val)) > -0.1){
+                    fitness += 1;
                 }
+            }
                  continue;
             }
             propagateOneStep(net.inputs, net.hiddenNodes[0], net.bias[0]);
-            net.hiddenNodes[0] = sig(net.hiddenNodes[0]);
+            net.hiddenNodes[0] = tanh(net.hiddenNodes[0]);
             for (int i = 0; i<net.hiddenNodes.length - 1; i++){
                 propagateOneStep(net.hiddenNodes[i], net.hiddenNodes[i + 1], net.bias[i + 1]);
-                net.hiddenNodes[i + 1] = sig(net.hiddenNodes[i + 1]);
+                net.hiddenNodes[i + 1] = tanh(net.hiddenNodes[i + 1]);
             }
             propagateOneStep(net.hiddenNodes[net.hiddenNodes.length - 1], net.outputs, net.bias[net.bias.length - 1]);
-            net.outputs = sig(net.outputs);
-            //System.out.println(actual[inputs] + "  " + net.outputs[0].val);
+            net.outputs = tanh(net.outputs);
             /// only one output node.
-            if (actual[inputs] > 0.5 && net.outputs[0].val > 0.5){
-                fitness += 1;
+            if (actual[inputs] < 0 && net.outputs[0].val < 0){
+                if ((Math.abs(actual[inputs]) - Math.abs(net.outputs[0].val)) < 0.1 && (Math.abs(actual[inputs]) - Math.abs(net.outputs[0].val)) > -0.1){
+                    fitness += 1;
+                }
             }
-            if ((actual[inputs] < 0.5 && net.outputs[0].val < 0.5)) {
-                fitness += 1;
+            if (actual[inputs] > 0 && net.outputs[0].val > 0){
+                if ((Math.abs(actual[inputs]) - Math.abs(net.outputs[0].val)) < 0.1 && (Math.abs(actual[inputs]) - Math.abs(net.outputs[0].val)) > -0.1){
+                    fitness += 1;
+                }
             }
         }
         return fitness;
@@ -94,19 +102,11 @@ public class NeuralNetworkFitnessFunction implements ProblemInterface {
         }
         return array;
     }
-
+    
     private Node[] tanh(Node[] array) {
         for (int i = 0; i < array.length; i++) {
             array[i].val = Math.tanh(array[i].val);
         }
         return array;
     }
-
-    private double dtanh(double num) {
-        //return 1;
-        return (1 - (num * num));
-        // for the sigmoid
-        //final double val = sig(num);
-        //return (val*(1-val));
-    }    
 }

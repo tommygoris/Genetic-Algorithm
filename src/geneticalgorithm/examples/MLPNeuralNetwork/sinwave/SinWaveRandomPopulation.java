@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package geneticalgorithm.examples.evolveann.sinwave;
+package geneticalgorithm.examples.MLPNeuralNetwork.sinwave;
 
-import geneticalgorithm.examples.evolveann.*;
+import geneticalgorithm.neuralnetwork.utilities.NeuralNetworkUtilities;
 import geneticalgorithm.Individual;
 import geneticalgorithm.neuralnetwork.NeuralNetwork;
 import geneticalgorithm.problem.ProblemInterface;

@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package geneticalgorithm.examples.evolveann.sinwave;
+package geneticalgorithm.examples.MLPNeuralNetwork.sinwave;
 
 import geneticalgorithm.Individual;
 import geneticalgorithm.Population;
 import geneticalgorithm.crossover.neuralcrossover.NeuralNetworkCrossover;
-import geneticalgorithm.examples.evolveann.EvolveNeuralNetworkTest;
-import geneticalgorithm.examples.evolveann.NeuralNetworkFitnessFunction;
-import geneticalgorithm.examples.evolveann.NeuralNetworkUtilities;
+import geneticalgorithm.examples.MLPNeuralNetwork.wordguess.EvolveNeuralNetworkTest;
+import geneticalgorithm.examples.MLPNeuralNetwork.wordguess.NeuralNetworkFitnessFunction;
+import geneticalgorithm.neuralnetwork.utilities.NeuralNetworkUtilities;
 import geneticalgorithm.mutation.neuralmutation.AddNode;
 import geneticalgorithm.mutation.neuralmutation.AlterWeights;
 import geneticalgorithm.mutation.neuralmutation.DeleteNode;
@@ -52,6 +52,7 @@ public class SinWaveNeuralNetwork{
         ElitismStrategy eliteStrategy = new ElitismStrategy(25);
         AlterWeights alterMutation = new AlterWeights(fitnessFunction, 0.025);
         int generation = 0;
+        XMLWriter write = new XMLWriter();
         while(true){
             //pop = NeuralNetworkUtilities.cleanUpHiddenLayer(pop);
             eliteStrategy.Strategy(pop);
@@ -61,7 +62,6 @@ public class SinWaveNeuralNetwork{
             pop.population = pop.mutate(alterMutation);
             pop.population = eliteStrategy.getbestPop(pop);
             pop.bestFitness = ProblemUtility.getBestFitnessMax(pop);
-            XMLWriter write = new XMLWriter();
             write.writeNeuralNetwork((NeuralNetwork)pop.bestIndividual.individual,pop.bestFitness + "", "SinWave" );
             System.out.println(pop.bestFitness + " Generation: " + generation);
             if (pop.bestFitness == solution){

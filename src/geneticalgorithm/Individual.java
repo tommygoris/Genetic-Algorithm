@@ -5,7 +5,7 @@
  */
 package geneticalgorithm;
 
-import geneticalgorithm.examples.evolveann.NeuralNetworkUtilities;
+import geneticalgorithm.neuralnetwork.utilities.NeuralNetworkUtilities;
 import geneticalgorithm.neuralnetwork.NeuralNetwork;
 import java.util.Arrays;
 

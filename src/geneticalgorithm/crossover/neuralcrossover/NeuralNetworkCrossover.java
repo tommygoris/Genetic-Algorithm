@@ -7,7 +7,7 @@ package geneticalgorithm.crossover.neuralcrossover;
 
 import geneticalgorithm.Individual;
 import geneticalgorithm.crossover.CrossoverInterface;
-import geneticalgorithm.examples.evolveann.NeuralNetworkUtilities;
+import geneticalgorithm.neuralnetwork.utilities.NeuralNetworkUtilities;
 import geneticalgorithm.neuralnetwork.NeuralNetwork;
 import geneticalgorithm.neuralnetwork.Node;
 import geneticalgorithm.problem.ProblemInterface;

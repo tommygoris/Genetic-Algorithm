@@ -6,10 +6,10 @@
 package geneticalgorithm.crossover.neuralcrossover;
 
 import geneticalgorithm.Individual;
-import geneticalgorithm.examples.evolveann.DrawNeuralNetwork;
-import geneticalgorithm.examples.evolveann.NeuralNetworkFitnessFunction;
-import geneticalgorithm.examples.evolveann.NeuralNetworkPanel;
-import geneticalgorithm.examples.evolveann.NeuralNetworkUtilities;
+import geneticalgorithm.neuralnetwork.utilities.DrawNeuralNetwork;
+import geneticalgorithm.examples.MLPNeuralNetwork.wordguess.NeuralNetworkFitnessFunction;
+import geneticalgorithm.neuralnetwork.utilities.NeuralNetworkPanel;
+import geneticalgorithm.neuralnetwork.utilities.NeuralNetworkUtilities;
 import geneticalgorithm.neuralnetwork.NeuralNetwork;
 import org.junit.After;
 import org.junit.AfterClass;

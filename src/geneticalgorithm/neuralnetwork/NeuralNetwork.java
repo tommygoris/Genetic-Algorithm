@@ -5,7 +5,7 @@
  */
 package geneticalgorithm.neuralnetwork;
 
-import geneticalgorithm.examples.evolveann.DrawNeuralNetwork;
+import geneticalgorithm.neuralnetwork.utilities.DrawNeuralNetwork;
 import java.awt.Graphics;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.JFrame;

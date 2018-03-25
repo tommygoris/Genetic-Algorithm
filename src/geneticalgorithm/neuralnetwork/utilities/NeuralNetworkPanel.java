@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package geneticalgorithm.examples.evolveann;
+package geneticalgorithm.neuralnetwork.utilities;
 
+import geneticalgorithm.neuralnetwork.utilities.DrawNeuralNetwork;
 import java.util.LinkedList;
 import java.util.Queue;
 import javax.swing.JFrame;

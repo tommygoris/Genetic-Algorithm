@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package geneticalgorithm.examples.evolveann;
+package geneticalgorithm.examples.MLPNeuralNetwork.wordguess;
 
+import geneticalgorithm.neuralnetwork.utilities.NeuralNetworkUtilities;
 import geneticalgorithm.Individual;
 import geneticalgorithm.neuralnetwork.NeuralNetwork;
 import geneticalgorithm.problem.ProblemInterface;
@@ -57,8 +58,7 @@ public class EvolveNeuralNetworkPopulation implements RandomPopulationInterface 
             listPop.add(nodes);
             numOfNodes -= nodes;            
         }    
-        net = NeuralNetworkUtilities.addHiddenNodes(net, listPop.stream().mapToInt(i->i).toArray());      
-        
+        net = NeuralNetworkUtilities.addHiddenNodes(net, listPop.stream().mapToInt(i->i).toArray());            
         net.createBias();
         
         return new Individual(net, (double)fitnessFunction.fitnessFunction(net));

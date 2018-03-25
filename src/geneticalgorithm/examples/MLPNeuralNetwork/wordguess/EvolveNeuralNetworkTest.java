@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package geneticalgorithm.examples.evolveann;
+package geneticalgorithm.examples.MLPNeuralNetwork.wordguess;
 
 import geneticalgorithm.Individual;
 import geneticalgorithm.Population;

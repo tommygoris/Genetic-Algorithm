@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package geneticalgorithm.examples.evolveann.recurrentnetworks;
+package geneticalgorithm.examples.recurrentnetwork;
 
-import geneticalgorithm.examples.evolveann.DrawNeuralNetwork;
-import geneticalgorithm.examples.evolveann.NeuralNetworkPanel;
-import geneticalgorithm.examples.evolveann.NeuralNetworkUtilities;
+import geneticalgorithm.neuralnetwork.utilities.DrawNeuralNetwork;
+import geneticalgorithm.neuralnetwork.utilities.NeuralNetworkPanel;
+import geneticalgorithm.neuralnetwork.utilities.NeuralNetworkUtilities;
 import geneticalgorithm.neuralnetwork.NeuralNetwork;
 import geneticalgorithm.neuralnetwork.Node;
 import geneticalgorithm.neuralnetwork.recurrentneuralnetworks.RecurrentNeuralNetwork;

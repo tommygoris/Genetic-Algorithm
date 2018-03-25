@@ -5,9 +5,9 @@
  */
 package geneticalgorithm.mutation.neuralmutation;
 
-import geneticalgorithm.examples.evolveann.DrawNeuralNetwork;
-import geneticalgorithm.examples.evolveann.NeuralNetworkPanel;
-import geneticalgorithm.examples.evolveann.NeuralNetworkUtilities;
+import geneticalgorithm.neuralnetwork.utilities.DrawNeuralNetwork;
+import geneticalgorithm.neuralnetwork.utilities.NeuralNetworkPanel;
+import geneticalgorithm.neuralnetwork.utilities.NeuralNetworkUtilities;
 import geneticalgorithm.neuralnetwork.NeuralNetwork;
 import geneticalgorithm.neuralnetwork.Node;
 import java.util.concurrent.ThreadLocalRandom;
