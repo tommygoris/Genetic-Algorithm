@@ -23,8 +23,8 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Tommy
  */
 public class OneMaxProblem {
-    private static final int lengthOfProblem = 1000;
-    private static final int populationSize = 100;
+    private static final int lengthOfProblem = 10000;
+    private static final int populationSize = 1000;
     private static final OneMaxFitnessFunction fitnessFunction = new OneMaxFitnessFunction();
     
     public static void main(String[] args){

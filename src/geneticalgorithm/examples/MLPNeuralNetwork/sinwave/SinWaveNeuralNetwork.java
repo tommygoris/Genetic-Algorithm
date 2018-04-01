@@ -45,11 +45,11 @@ public class SinWaveNeuralNetwork{
         fitnessFunction = new SinWaveFitnessFunction(outputList.toArray(new Double[0]), inputList.toArray(new Double[0][0]));
         TournamentSelection tournament = new TournamentSelection(7, .95);
         NeuralNetworkCrossover crossover = new NeuralNetworkCrossover(fitnessFunction, .95);
-        AddNode addMutation = new AddNode(fitnessFunction, 0.05);
-        DeleteNode deleteMutation = new DeleteNode(fitnessFunction, 0.025);
+        AddNode addMutation = new AddNode(fitnessFunction, 0.005);
+        DeleteNode deleteMutation = new DeleteNode(fitnessFunction, 0.005);
         SinWaveRandomPopulation randomPopulation = new SinWaveRandomPopulation(populationSize, startingNodes, 1, 1, fitnessFunction);
         Population pop = new Population(randomPopulation, crossover, 100);
-        ElitismStrategy eliteStrategy = new ElitismStrategy(25);
+        ElitismStrategy eliteStrategy = new ElitismStrategy(10);
         AlterWeights alterMutation = new AlterWeights(fitnessFunction, 0.025);
         int generation = 0;
         XMLWriter write = new XMLWriter();

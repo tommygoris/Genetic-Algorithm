@@ -113,7 +113,7 @@ public class NeuralNetworkUtilities {
         
         for (int i = 0; i<rNet.recurrentLayer.length; i++){
             for (int j = 0; j<rNet.recurrentLayer[i].length; j++){
-                rNet.recurrentLayer[i][j] = new Node(ThreadLocalRandom.current().nextGaussian());
+                rNet.recurrentLayer[i][j] = new Node(0);
             }
         }
         

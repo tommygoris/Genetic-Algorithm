@@ -68,7 +68,11 @@ public class DeleteNodeTest {
         Population pop = new Population(newIndPop, crossover);
         //DeleteNode instance = new DeleteNode();
         NeuralNetwork expResult = new NeuralNetwork();
+
         //expResult = NeuralNetworkUtilities.initTree(expResult, inputTrainData, 1);
+
+       // expResult = NeuralNetworkUtilities.initTree(expResult, inputTrainData, 1);
+
         expResult = NeuralNetworkUtilities.addHiddenNodes(expResult, new int[]{2,2,2,2,2,1});
         
         //newIndPop = instance.mutate(pop);
