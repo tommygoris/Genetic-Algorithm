@@ -57,7 +57,7 @@ public class DeleteNodeTest {
         int locationOfNode = 0;
         
         
-        net = NeuralNetworkUtilities.initTree(net, inputTrainData, 1);
+        //net = NeuralNetworkUtilities.initTree(net, inputTrainData, 1);
         net = NeuralNetworkUtilities.addHiddenNodes(net, new int[]{2,2,2,2,2,2});       
         ProblemInterface fitnessFunction = null;
         Individual ind = new Individual(net, 0.0);
@@ -66,12 +66,12 @@ public class DeleteNodeTest {
         TournamentSelection tournament = new TournamentSelection(7, 0.75);
         NeuralNetworkCrossover crossover = new NeuralNetworkCrossover(fitnessFunction, 0.75);
         Population pop = new Population(newIndPop, crossover);
-        DeleteNode instance = new DeleteNode();
+        //DeleteNode instance = new DeleteNode();
         NeuralNetwork expResult = new NeuralNetwork();
-        expResult = NeuralNetworkUtilities.initTree(expResult, inputTrainData, 1);
+        //expResult = NeuralNetworkUtilities.initTree(expResult, inputTrainData, 1);
         expResult = NeuralNetworkUtilities.addHiddenNodes(expResult, new int[]{2,2,2,2,2,1});
         
-        newIndPop = instance.mutate(pop);
+        //newIndPop = instance.mutate(pop);
         assertTrue(NeuralNetworkUtilities.checkNet(expResult, net));
         
 //        DrawNeuralNetwork draw = new DrawNeuralNetwork(newn);

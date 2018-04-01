@@ -54,11 +54,11 @@ public class ElitismStrategyTest {
     public void testStrategy() {
         TournamentSelection tournament = new TournamentSelection(7, 0.95);
         StringCrossover crossover = new StringCrossover(199, fitnessFunction, 1);
-        Population pop = new Population(OneMaxProblem.createRandomPopulation(), crossover);
+        //Population pop = new Population(OneMaxProblem.createRandomPopulation(), crossover);
         System.out.println("Strategy");
         //Population pop = null;
         ElitismStrategy instance = new ElitismStrategy(10);
-        instance.Strategy(pop);
+        //instance.Strategy(pop);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -71,8 +71,8 @@ public class ElitismStrategyTest {
         System.out.println("getBestPop");
         ElitismStrategy instance = null;
         Individual[] expResult = null;
-        Individual[] result = instance.getbestPop(pop);
-        assertArrayEquals(expResult, result);
+        //Individual[] result = instance.getbestPop(pop);
+        //assertArrayEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

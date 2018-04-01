@@ -8,6 +8,7 @@ import geneticalgorithm.examples.onemax.OneMaxProblem;
 import geneticalgorithm.mutation.RandomIntArrayMutation;
 import geneticalgorithm.mutation.RandomStringMutation;
 import geneticalgorithm.problem.ProblemUtility;
+import geneticalgorithm.selections.RankSelection;
 import geneticalgorithm.selections.TournamentSelection;
 import geneticalgorithm.strategies.ElitismStrategy;
 import java.util.Arrays;
@@ -36,7 +37,8 @@ public class NQueensProblem {
     public static void main(String[] args) {
         fitnessFunction.initializeMap();
         ProblemUtility utilities = new ProblemUtility();  
-        TournamentSelection tournament = new TournamentSelection(7, 0.75);
+        //TournamentSelection tournament = new TournamentSelection(7, 0.75);
+        RankSelection rankSelection = new RankSelection();
         IntArrayCrossover crossover = new IntArrayCrossover(3, fitnessFunction, 0.75);
         NQueensPopulation randomPopulation = new NQueensPopulation(populationSize, lengthOfProblem, fitnessFunction);
         RandomIntArrayMutation mutation = new RandomIntArrayMutation(0.05, 0, lengthOfProblem, fitnessFunction);
@@ -46,7 +48,7 @@ public class NQueensProblem {
         
         while(true){
             //eliteStrategy.Strategy(pop);
-            pop.population = pop.crossover(tournament);
+            pop.population = pop.crossover(rankSelection);
             pop.population = pop.mutate(mutation);
             //pop.population = eliteStrategy.getbestPop(pop);
             pop.bestFitness = utilities.getBestFitnessMax(pop);
