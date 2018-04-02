@@ -14,5 +14,5 @@ import geneticalgorithm.neuralnetwork.recurrentneuralnetworks.RecurrentNeuralNet
  * @author TommyGoris
  */
 public interface RecurrentNeuralNetworkInterface extends NeuralNetworkInterface{
-    public void setRecurrentLayer(RecurrentNeuralNetwork net, Node[] vals, int layer);
+    public void setRecurrentLayer(RecurrentNeuralNetwork net, Node[] vals, int layer, int currentInput);
 }
