@@ -23,6 +23,6 @@ public class EvolveRecurrentNetworkTest {
         NeuralNetwork net = new NeuralNetwork();
         net = NeuralNetworkUtilities.initTree(net, inputTrainData, 1);
         net = NeuralNetworkUtilities.addHiddenNodes(net, new int[]{1,1,1,1});
-        RecurrentNeuralNetwork rNet = NeuralNetworkUtilities.InitRecurrentNodes(net);      
+        //RecurrentNeuralNetwork rNet = NeuralNetworkUtilities.InitRecurrentNodes(net);      
     }
 }

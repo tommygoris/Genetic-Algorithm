@@ -29,28 +29,28 @@ import javafx.util.Pair;
  */
 public class NQueensProblem {
 
-    private static final int lengthOfProblem = 1000;
-    private static final int populationSize = 100;
+    private static final int lengthOfProblem = 50;
+    private static final int populationSize = 5000;
     private static final NQueensFitnessFunction fitnessFunction = new NQueensFitnessFunction(lengthOfProblem);
     private static final int solution = (lengthOfProblem)*(lengthOfProblem-1) * 50;
     
     public static void main(String[] args) {
         fitnessFunction.initializeMap();
         ProblemUtility utilities = new ProblemUtility();  
-        TournamentSelection tournament = new TournamentSelection(7, 0.75);
+        TournamentSelection tournament = new TournamentSelection(7, 0.80);
         //RankSelection rankSelection = new RankSelection();
-        IntArrayCrossover crossover = new IntArrayCrossover(3, fitnessFunction, 0.75);
+        IntArrayCrossover crossover = new IntArrayCrossover(19, fitnessFunction, 0.90);
         NQueensPopulation randomPopulation = new NQueensPopulation(populationSize, lengthOfProblem, fitnessFunction);
-        RandomIntArrayMutation mutation = new RandomIntArrayMutation(0.05, 0, lengthOfProblem, fitnessFunction);
-        Population pop = new Population(randomPopulation.createRandomPopulation(), crossover);
+        RandomIntArrayMutation mutation = new RandomIntArrayMutation(0.01, 0, lengthOfProblem, fitnessFunction);
+        Population pop = new Population(randomPopulation, crossover, 80);
         ElitismStrategy eliteStrategy = new ElitismStrategy(10);
         int generation = 0;
         
         while(true){
-            //eliteStrategy.Strategy(pop);
+            eliteStrategy.Strategy(pop);
             pop.population = pop.crossover(tournament);
             pop.population = pop.mutate(mutation);
-            //pop.population = eliteStrategy.getbestPop(pop);
+            pop.population = eliteStrategy.getbestPop(pop);
             pop.bestFitness = utilities.getBestFitnessMax(pop);
             
             System.out.println(pop.bestFitness);

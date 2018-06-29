@@ -31,7 +31,7 @@ import javafx.util.Pair;
  * @author TommyGoris
  */
 public class SinWaveNeuralNetwork{
-    private static final int populationSize = 1000;
+    private static final int populationSize = 2000;
     private static final int inputSize = 50000;
     private static final int startingNodes = 1;
     private static final int outputNodes = 1;

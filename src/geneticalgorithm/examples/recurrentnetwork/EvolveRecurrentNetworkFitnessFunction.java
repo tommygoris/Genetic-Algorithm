@@ -40,15 +40,15 @@ public class EvolveRecurrentNetworkFitnessFunction implements ProblemInterface, 
                 rNet.inputs[inputsLength].val = this.input[inputs][inputsLength];
             }
 
-            propagateOneStep(rNet.inputs, rNet.hiddenNodes[0], rNet.bias[0], rNet.recurrentLayer[0]);
+            //propagateOneStep(rNet.inputs, rNet.hiddenNodes[0], rNet.bias[0], rNet.recurrentLayer[0]);
             rNet.hiddenNodes[0] = tanh(rNet.hiddenNodes[0]);
             this.setRecurrentLayer(rNet, rNet.hiddenNodes[0], 0);
             for (int i = 0; i<rNet.hiddenNodes.length - 1; i++){
-                propagateOneStep(rNet.hiddenNodes[i], rNet.hiddenNodes[i + 1], rNet.bias[i + 1], rNet.recurrentLayer[i]);
+                //propagateOneStep(rNet.hiddenNodes[i], rNet.hiddenNodes[i + 1], rNet.bias[i + 1], rNet.recurrentLayer[i]);
                 rNet.hiddenNodes[i + 1] = tanh(rNet.hiddenNodes[i + 1]);
                 this.setRecurrentLayer(rNet, rNet.hiddenNodes[i + 1], i + 1);
             }
-            propagateOneStep(rNet.hiddenNodes[rNet.hiddenNodes.length - 1], rNet.outputs, rNet.bias[rNet.bias.length - 1], rNet.recurrentLayer[rNet.recurrentLayer.length - 1]);
+            //propagateOneStep(rNet.hiddenNodes[rNet.hiddenNodes.length - 1], rNet.outputs, rNet.bias[rNet.bias.length - 1], rNet.recurrentLayer[rNet.recurrentLayer.length - 1]);
             rNet.outputs = tanh(rNet.outputs);
 
         }
@@ -79,7 +79,7 @@ public class EvolveRecurrentNetworkFitnessFunction implements ProblemInterface, 
     @Override
     public void setRecurrentLayer(RecurrentNeuralNetwork net, Node[] vals, int layer) {
         for (int i = 0; i<net.recurrentLayer[layer].length; i++){
-            net.recurrentLayer[layer][i].val = vals[i].val;
+            //net.recurrentLayer[layer][i].val = vals[i].val;
         }
     }
     private Node[] tanh(Node[] array) {

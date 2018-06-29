@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * @author TommyGoris
  */
 public class RecurrentNeuralNetwork extends NeuralNetwork {
-    public Node[][] recurrentLayer;
+    public Node[][][] recurrentLayer;
     
     public RecurrentNeuralNetwork(){
     }

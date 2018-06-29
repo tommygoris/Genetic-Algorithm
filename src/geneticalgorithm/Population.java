@@ -12,6 +12,8 @@ import geneticalgorithm.problem.RandomPopulationInterface;
 import geneticalgorithm.selections.IndividualSelector;
 import geneticalgorithm.selections.SelectionInterface;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  *
  * @author Tommy
@@ -68,11 +70,9 @@ public class Population{
         return newIndividualsPopulation;
     }
     
-    public Individual[] randomPop(Individual[] newIndividualsPopulation){
-        if (introduceRandomPop != 0){
-            for (int i = introduceRandomPop; i < this.population.length; i++){
-                newIndividualsPopulation[i] = randomPopulation.createRandomIndividual();
-            }
+    public Individual[] randomPop(Individual[] newIndividualsPopulation) {
+        for (int i = this.population.length - introduceRandomPop; i < this.population.length; i++) {
+            newIndividualsPopulation[i] = randomPopulation.createRandomIndividual();
         }
         return newIndividualsPopulation;
     }
