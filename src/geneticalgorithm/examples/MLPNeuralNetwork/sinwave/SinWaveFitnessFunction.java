@@ -99,11 +99,12 @@ public class SinWaveFitnessFunction implements ProblemInterface, NeuralNetworkIn
         }
         return array;
     }
-    
+
     private Node[] tanh(Node[] array) {
         for (int i = 0; i < array.length; i++) {
             array[i].val = Math.tanh(array[i].val);
         }
         return array;
     }
+
 }
