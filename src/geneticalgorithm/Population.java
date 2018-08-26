@@ -51,7 +51,7 @@ public class Population{
     
     //// Returns a new mutated population.
     public Individual[] mutate(MutationInterface mutation){
-        Individual[] newIndividualsPopulation = new Individual[this.population.length];
+        Individual[] newIndividualsPopulation;
         newIndividualsPopulation = mutation.mutate(this);       
         return newIndividualsPopulation;
     }

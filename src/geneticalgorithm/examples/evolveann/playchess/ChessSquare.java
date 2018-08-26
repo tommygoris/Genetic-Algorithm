@@ -5,7 +5,7 @@
  */
 package geneticalgorithm.examples.evolveann.playchess;
 
-import geneticalgorithm.examples.evolveann.playchess.pieces.ChessPieceInterface;
+import geneticalgorithm.examples.evolveann.playchess.pieces.AbstractChessPiece;
 
 /**
  *
@@ -14,12 +14,12 @@ import geneticalgorithm.examples.evolveann.playchess.pieces.ChessPieceInterface;
 public class ChessSquare {
     
     public boolean taken = false;
-    public ChessPieceInterface chessPiece = null;
+    public AbstractChessPiece chessPiece = null;
     public ChessSquare(){
         
     }
     
-    public ChessSquare(ChessPieceInterface chessPiece){
+    public ChessSquare(AbstractChessPiece chessPiece){
         this.chessPiece = chessPiece;
         this.taken = true;
     }
