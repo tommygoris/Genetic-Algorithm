@@ -15,37 +15,42 @@ public class Knight extends AbstractChessPiece {
     @Override
     public void UpdateMoves(ChessBoard board) {
         this.possibleMoves.clear();
-        if (board.canMove(ChessMovement.TwoDownOneLeftKnightMove))
+        if (board.canMoveOrCapture(ChessMovement.TwoDownOneLeftKnightMove, isTopSide))
         {
             this.possibleMoves.add(ChessMovement.TwoDownOneLeftKnightMove);
         }
-        if (board.canMove(ChessMovement.TwoDownOneRightKnightMove))
+        if (board.canMoveOrCapture(ChessMovement.TwoDownOneRightKnightMove, isTopSide))
         {
             this.possibleMoves.add(ChessMovement.TwoDownOneRightKnightMove);
         }
-        if (board.canMove(ChessMovement.TwoUpOneLeftKnightMove))
+        if (board.canMoveOrCapture(ChessMovement.TwoUpOneLeftKnightMove, isTopSide))
         {
             this.possibleMoves.add(ChessMovement.TwoUpOneLeftKnightMove);
         }
-        if (board.canMove(ChessMovement.TwoUpOneRightKnightMove))
+        if (board.canMoveOrCapture(ChessMovement.TwoUpOneRightKnightMove, isTopSide))
         {
             this.possibleMoves.add(ChessMovement.TwoUpOneRightKnightMove);
         }
-        if (board.canMove(ChessMovement.TwoLeftOneDownKnightMove))
+        if (board.canMoveOrCapture(ChessMovement.TwoLeftOneDownKnightMove, isTopSide))
         {
             this.possibleMoves.add(ChessMovement.TwoLeftOneDownKnightMove);
         }
-        if (board.canMove(ChessMovement.TwoLeftOneUpKnightMove))
+        if (board.canMoveOrCapture(ChessMovement.TwoLeftOneUpKnightMove, isTopSide))
         {
             this.possibleMoves.add(ChessMovement.TwoLeftOneUpKnightMove);
         }
-        if (board.canMove(ChessMovement.TwoRightOneDownKnightMove))
+        if (board.canMoveOrCapture(ChessMovement.TwoRightOneDownKnightMove, isTopSide))
         {
             this.possibleMoves.add(ChessMovement.TwoRightOneDownKnightMove);
         }
-        if (board.canMove(ChessMovement.TwoRightOneUpKnightMove))
+        if (board.canMoveOrCapture(ChessMovement.TwoRightOneUpKnightMove, isTopSide))
         {
             this.possibleMoves.add(ChessMovement.TwoRightOneUpKnightMove);
         }
+    }
+
+    @Override
+    public String toString(){
+        return "KN" + "-" + this.color.charAt(0);
     }
 }

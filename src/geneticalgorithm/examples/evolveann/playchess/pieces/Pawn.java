@@ -81,6 +81,6 @@ public class Pawn extends AbstractChessPiece {
     
     @Override
     public String toString(){
-     return this.color.charAt(0) + "P";   
+        return "P" + "-" + this.color.charAt(0);
     }
 }

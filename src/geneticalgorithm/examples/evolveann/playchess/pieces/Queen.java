@@ -24,4 +24,9 @@ public class Queen extends AbstractChessPiece {
         this.possibleMoves.addAll(ChessMovement.GetAllPossibleMovesSouthWestDiagonol(board, this.isTopSide));
         this.possibleMoves.addAll(ChessMovement.GetAllPossibleMovesSouthEastDiagonol(board, this.isTopSide));
     }
+
+    @Override
+    public String toString(){
+        return "Q" + "-" + this.color.charAt(0);
+    }
 }

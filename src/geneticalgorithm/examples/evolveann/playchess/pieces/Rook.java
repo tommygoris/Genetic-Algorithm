@@ -20,4 +20,9 @@ public class Rook extends AbstractChessPiece {
         this.possibleMoves.addAll(ChessMovement.GetAllPossibleMovesEast(board, this.isTopSide));
         this.possibleMoves.addAll(ChessMovement.GetAllPossibleMovesWest(board, this.isTopSide));
     }
+
+    @Override
+    public String toString(){
+        return "R" + "-" + this.color.charAt(0);
+    }
 }
