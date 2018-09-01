@@ -6,8 +6,6 @@
 package geneticalgorithm.examples.evolveann.playchess;
 
 import geneticalgorithm.examples.evolveann.playchess.pieces.Pawn;
-import javafx.scene.layout.*;
-import javafx.stage.Stage;
 import javafx.util.Pair;
 
 /**
@@ -16,31 +14,30 @@ import javafx.util.Pair;
  */
 public class ChessBoard {
 
-    private final int MAX_CHESSBOARD_SIZE = 8;
-    public ChessSquare[][] chessBoard = new ChessSquare[MAX_CHESSBOARD_SIZE][MAX_CHESSBOARD_SIZE];
+    public ChessSquare[][] chessBoard = new ChessSquare[ChessProperties.MAX_CHESSBOARD_SIZE][ChessProperties.MAX_CHESSBOARD_SIZE];
 
     public ChessBoard() {
     }
 
     public boolean canMove(int x, int y) {
-        return (x < MAX_CHESSBOARD_SIZE && y < MAX_CHESSBOARD_SIZE && x > 0 && y > 0) && !chessBoard[x][y].taken;
+        return (x < ChessProperties.MAX_CHESSBOARD_SIZE && y < ChessProperties.MAX_CHESSBOARD_SIZE && x > 0 && y > 0) && !chessBoard[x][y].taken;
     }
 
     public boolean canMove(Pair<Integer, Integer> pair) {
         int x = pair.getKey();
         int y = pair.getValue();
-        return (x < MAX_CHESSBOARD_SIZE && y < MAX_CHESSBOARD_SIZE && x > 0 && y > 0) && !chessBoard[x][y].taken;
+        return (x < ChessProperties.MAX_CHESSBOARD_SIZE && y < ChessProperties.MAX_CHESSBOARD_SIZE && x > 0 && y > 0) && !chessBoard[x][y].taken;
     }
 
     public boolean canCapture(int x, int y, boolean isTopSide) {
-        return (x < MAX_CHESSBOARD_SIZE && y < MAX_CHESSBOARD_SIZE && x > 0 && y > 0) &&
+        return (x < ChessProperties.MAX_CHESSBOARD_SIZE && y < ChessProperties.MAX_CHESSBOARD_SIZE && x > 0 && y > 0) &&
                 chessBoard[x][y].taken && chessBoard[x][y].chessPiece.isTopSide != isTopSide;
     }
 
     public boolean canCapture(Pair<Integer, Integer> pair, boolean isTopSide) {
         int x = pair.getKey();
         int y = pair.getValue();
-        return (x < MAX_CHESSBOARD_SIZE && y < MAX_CHESSBOARD_SIZE && x > 0 && y > 0) && chessBoard[x][y].taken &&
+        return (x < ChessProperties.MAX_CHESSBOARD_SIZE && y < ChessProperties.MAX_CHESSBOARD_SIZE && x > 0 && y > 0) && chessBoard[x][y].taken &&
                 chessBoard[x][y].chessPiece.isTopSide != isTopSide;
     }
 
@@ -83,27 +80,5 @@ public class ChessBoard {
             }
         }
         return null;
-    }
-
-    public GridPane createAndGetChessBoardGridPane(String chessBoardColorOne, String chessBoardColorTwo) {
-        GridPane gridPane = new GridPane();
-        for (int row = 0; row < MAX_CHESSBOARD_SIZE; row++) {
-            for (int col = 0; col < MAX_CHESSBOARD_SIZE; col++) {
-                StackPane square = new StackPane();
-                String chosenColor;
-                if ((row + col) % 2 == 0) {
-                    chosenColor = chessBoardColorOne;
-                } else {
-                    chosenColor = chessBoardColorTwo;
-                }
-                square.setStyle("-fx-background-color: " + chosenColor + ";");
-                gridPane.add(square, col, row);
-            }
-        }
-        return gridPane;
-    }
-
-    public void setUpGridPane(GridPane gameGridPane){
-
     }
 }

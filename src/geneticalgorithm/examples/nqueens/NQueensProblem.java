@@ -29,7 +29,7 @@ import javafx.util.Pair;
  */
 public class NQueensProblem {
 
-    private static final int lengthOfProblem = 50;
+    private static final int lengthOfProblem = 20;
     private static final int populationSize = 5000;
     private static final NQueensFitnessFunction fitnessFunction = new NQueensFitnessFunction(lengthOfProblem);
     private static final int solution = (lengthOfProblem)*(lengthOfProblem-1) * 50;
@@ -39,10 +39,10 @@ public class NQueensProblem {
         ProblemUtility utilities = new ProblemUtility();  
         TournamentSelection tournament = new TournamentSelection(7, 0.80);
         //RankSelection rankSelection = new RankSelection();
-        IntArrayCrossover crossover = new IntArrayCrossover(19, fitnessFunction, 0.90);
+        IntArrayCrossover crossover = new IntArrayCrossover(2, fitnessFunction, 0.90);
         NQueensPopulation randomPopulation = new NQueensPopulation(populationSize, lengthOfProblem, fitnessFunction);
         RandomIntArrayMutation mutation = new RandomIntArrayMutation(0.01, 0, lengthOfProblem, fitnessFunction);
-        Population pop = new Population(randomPopulation, crossover, 80);
+        Population pop = new Population(randomPopulation, crossover, 500);
         ElitismStrategy eliteStrategy = new ElitismStrategy(10);
         int generation = 0;
         

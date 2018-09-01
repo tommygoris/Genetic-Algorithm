@@ -23,17 +23,17 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Tommy
  */
 public class OneMaxProblem {
-    private static final int lengthOfProblem = 10000;
-    private static final int populationSize = 1000;
+    private static final int lengthOfProblem = 1000;
+    private static final int populationSize = 10000;
     private static final OneMaxFitnessFunction fitnessFunction = new OneMaxFitnessFunction();
     
     public static void main(String[] args){
         ProblemUtility utilities = new ProblemUtility();        
-        TournamentSelection tournament = new TournamentSelection(7, 0.95);
-        StringCrossover crossover = new StringCrossover(199, fitnessFunction, 1);
-        RandomStringMutation mutation = new RandomStringMutation(0.005, 0, 1, fitnessFunction);
+        TournamentSelection tournament = new TournamentSelection(2, 0.95);
+        StringCrossover crossover = new StringCrossover(2, fitnessFunction, 0.95);
+        RandomStringMutation mutation = new RandomStringMutation(0.0025, 0, 1, fitnessFunction);
         OneMaxPopulation randomPopulation = new OneMaxPopulation(populationSize, lengthOfProblem, fitnessFunction);
-        Population pop = new Population(randomPopulation, crossover, 50);
+        Population pop = new Population(randomPopulation, crossover, 100);
         int generation = 0;
         ElitismStrategy eliteStrategy = new ElitismStrategy(20);
         while(true){
