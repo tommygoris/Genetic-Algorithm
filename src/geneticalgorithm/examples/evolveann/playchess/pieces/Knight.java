@@ -15,35 +15,35 @@ public class Knight extends AbstractChessPiece {
     @Override
     public void UpdateMoves(ChessBoard board) {
         this.possibleMoves.clear();
-        if (board.canMoveOrCapture(ChessMovement.TwoDownOneLeftKnightMove, isTopSide))
+        if (board.canMoveOrCapture(ChessMovement.TwoDownOneLeftKnightMove, isTopSide, this.currentPosition))
         {
             this.possibleMoves.add(ChessMovement.TwoDownOneLeftKnightMove);
         }
-        if (board.canMoveOrCapture(ChessMovement.TwoDownOneRightKnightMove, isTopSide))
+        if (board.canMoveOrCapture(ChessMovement.TwoDownOneRightKnightMove, isTopSide, this.currentPosition))
         {
             this.possibleMoves.add(ChessMovement.TwoDownOneRightKnightMove);
         }
-        if (board.canMoveOrCapture(ChessMovement.TwoUpOneLeftKnightMove, isTopSide))
+        if (board.canMoveOrCapture(ChessMovement.TwoUpOneLeftKnightMove, isTopSide, this.currentPosition))
         {
             this.possibleMoves.add(ChessMovement.TwoUpOneLeftKnightMove);
         }
-        if (board.canMoveOrCapture(ChessMovement.TwoUpOneRightKnightMove, isTopSide))
+        if (board.canMoveOrCapture(ChessMovement.TwoUpOneRightKnightMove, isTopSide, this.currentPosition))
         {
             this.possibleMoves.add(ChessMovement.TwoUpOneRightKnightMove);
         }
-        if (board.canMoveOrCapture(ChessMovement.TwoLeftOneDownKnightMove, isTopSide))
+        if (board.canMoveOrCapture(ChessMovement.TwoLeftOneDownKnightMove, isTopSide, this.currentPosition))
         {
             this.possibleMoves.add(ChessMovement.TwoLeftOneDownKnightMove);
         }
-        if (board.canMoveOrCapture(ChessMovement.TwoLeftOneUpKnightMove, isTopSide))
+        if (board.canMoveOrCapture(ChessMovement.TwoLeftOneUpKnightMove, isTopSide, this.currentPosition))
         {
             this.possibleMoves.add(ChessMovement.TwoLeftOneUpKnightMove);
         }
-        if (board.canMoveOrCapture(ChessMovement.TwoRightOneDownKnightMove, isTopSide))
+        if (board.canMoveOrCapture(ChessMovement.TwoRightOneDownKnightMove, isTopSide, this.currentPosition))
         {
             this.possibleMoves.add(ChessMovement.TwoRightOneDownKnightMove);
         }
-        if (board.canMoveOrCapture(ChessMovement.TwoRightOneUpKnightMove, isTopSide))
+        if (board.canMoveOrCapture(ChessMovement.TwoRightOneUpKnightMove, isTopSide, this.currentPosition))
         {
             this.possibleMoves.add(ChessMovement.TwoRightOneUpKnightMove);
         }

@@ -32,40 +32,41 @@ public class Pawn extends AbstractChessPiece {
     }
     
     private void UpdateTopBoard(ChessBoard board){
-        if (this.startingPosition.equals(currentPosition) && board.canMove(ChessMovement.moveSouthTwo)){
+        if (this.startingPosition.equals(currentPosition) && board.canMove(ChessMovement.moveSouthTwo, this.currentPosition)){
             this.possibleMoves.add(ChessMovement.moveSouthTwo);
         }
         
-        if (board.canMove(ChessMovement.moveSouth)){
+        if (board.canMove(ChessMovement.moveSouth, this.currentPosition)){
             this.possibleMoves.add(ChessMovement.moveSouth);
         }
-        if (board.canCapture(ChessMovement.moveSouthEast, this.isTopSide)){
+        if (board.canCapture(ChessMovement.moveSouthEast, this.isTopSide, this.currentPosition)){
             this.possibleMoves.add(ChessMovement.moveSouthEast);
         }
         
-        if (board.canCapture(ChessMovement.moveSouthWest, this.isTopSide)){
+        if (board.canCapture(ChessMovement.moveSouthWest, this.isTopSide, this.currentPosition)){
             this.possibleMoves.add(ChessMovement.moveSouthWest);
         }
 
         Pair<Integer, Integer> enPassantLocation = board.EnPassantPawnLocation(this.currentPosition, this.isTopSide);
-        if (enPassantLocation != null){
+        if (enPassantLocation != null)
+        {
             this.possibleMoves.add(enPassantLocation);
         } 
     }
     
     private void UpdateBottomBoard(ChessBoard board){
-        if (this.startingPosition.equals(currentPosition) && board.canMove(ChessMovement.moveNorthTwo)){
+        if (this.startingPosition.equals(currentPosition) && board.canMove(ChessMovement.moveNorthTwo, this.currentPosition)){
             this.possibleMoves.add(ChessMovement.moveNorthTwo);
         }
-        if (board.canMove(ChessMovement.moveNorth)){
+        if (board.canMove(ChessMovement.moveNorth, this.currentPosition)){
             this.possibleMoves.add(ChessMovement.moveNorth);
         }
         
-        if (board.canCapture(ChessMovement.moveNorthEast, this.isTopSide)){
+        if (board.canCapture(ChessMovement.moveNorthEast, this.isTopSide, this.currentPosition)){
             this.possibleMoves.add(ChessMovement.moveNorthEast);
         }
         
-        if (board.canCapture(ChessMovement.moveNorthWest, this.isTopSide)){
+        if (board.canCapture(ChessMovement.moveNorthWest, this.isTopSide, this.currentPosition)){
             this.possibleMoves.add(ChessMovement.moveNorthWest);
         }
 

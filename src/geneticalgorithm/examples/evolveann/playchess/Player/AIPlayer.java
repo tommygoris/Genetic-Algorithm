@@ -1,8 +1,11 @@
 package geneticalgorithm.examples.evolveann.playchess.Player;
 
-public class AIPlayer implements Player {
+import geneticalgorithm.examples.evolveann.playchess.ChessBoard;
+import geneticalgorithm.examples.evolveann.playchess.pieces.AbstractChessPiece;
+
+public class AIPlayer extends Player {
     @Override
-    public void move() {
+    public void move(ChessBoard board, int x, int y) {
 
     }
 }

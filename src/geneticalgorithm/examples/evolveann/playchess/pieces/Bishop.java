@@ -24,10 +24,10 @@ public class Bishop extends AbstractChessPiece {
     @Override
     public void UpdateMoves(ChessBoard board) {
         this.possibleMoves.clear();
-        this.possibleMoves.addAll(ChessMovement.GetAllPossibleMovesNorthWestDiagonol(board, this.isTopSide));
-        this.possibleMoves.addAll(ChessMovement.GetAllPossibleMovesNorthEastDiagonol(board, this.isTopSide));
-        this.possibleMoves.addAll(ChessMovement.GetAllPossibleMovesSouthWestDiagonol(board, this.isTopSide));
-        this.possibleMoves.addAll(ChessMovement.GetAllPossibleMovesSouthEastDiagonol(board, this.isTopSide));
+        this.possibleMoves.addAll(ChessMovement.GetAllPossibleMovesNorthWestDiagonol(board, this.isTopSide, this.currentPosition));
+        this.possibleMoves.addAll(ChessMovement.GetAllPossibleMovesNorthEastDiagonol(board, this.isTopSide, this.currentPosition));
+        this.possibleMoves.addAll(ChessMovement.GetAllPossibleMovesSouthWestDiagonol(board, this.isTopSide, this.currentPosition));
+        this.possibleMoves.addAll(ChessMovement.GetAllPossibleMovesSouthEastDiagonol(board, this.isTopSide, this.currentPosition));
     }
 
     @Override

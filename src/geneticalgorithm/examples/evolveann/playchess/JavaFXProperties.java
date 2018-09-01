@@ -7,6 +7,7 @@ public class JavaFXProperties {
     public static String bottomPlayerColor = "blue";
     public static String chessBoardColorOne = "#8b4513";
     public static String chessBoardColorTwo = "#b5651d";
+    public static String chessBoardHighlightColor = "#ff0000";
 
     public static Text getTopPieceText(String Name)
     {

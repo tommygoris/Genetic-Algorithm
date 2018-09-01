@@ -22,6 +22,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Pair;
+import org.omg.CORBA.INTERNAL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +38,8 @@ public class ChessGameMainWithUI extends Application {
     private ChessBoard gameChessBoard;
     private List<AbstractChessPiece> topChessPieces = this.createAndGetTopChessPieces();
     private List<AbstractChessPiece> bottomChessPieces = this.createAndGetBottomChessPieces();
+    private List<Pair<Integer, Integer>> highlightedLocations = new ArrayList<>();
+    ChessEngine chessEngine;
     private Player playerOne = new HumanPlayer();
     private Player playerTwo = new HumanPlayer();
 
@@ -48,11 +52,12 @@ public class ChessGameMainWithUI extends Application {
         primaryStage.setScene(new Scene(gameBoardGridPane, 400, 400));
         primaryStage.show();
 
-        ChessEngine chessEngine = new ChessEngine(gameChessBoard, playerOne, playerTwo);
 
         this.setupInitialChessBoardPositions();
         this.setUpGridPane();
 
+        chessEngine = new ChessEngine(playerOne, playerTwo);
+        chessEngine.updateGameState(gameChessBoard);
     }
 
     private void setChessBoardConstraints(GridPane gridPane) {
@@ -174,10 +179,101 @@ public class ChessGameMainWithUI extends Application {
     private final EventHandler<MouseEvent> stackPaneMouseHandler = selectedStackPane -> {
         int columnIndexSelectionX = GridPane.getColumnIndex((StackPane)selectedStackPane.getSource());
         int rowIndexSelectionY = GridPane.getRowIndex((StackPane)selectedStackPane.getSource());
+        boolean isPieceMoving = this.isHighlitedColorSelected(columnIndexSelectionX, rowIndexSelectionY);
+        if (isPieceMoving)
+        {
+            PlayerMove(columnIndexSelectionX, rowIndexSelectionY);
+        }
+        this.deHighlightLocations();
+        this.highlightPossibleMoves(columnIndexSelectionX, rowIndexSelectionY);
     };
 
     private final EventHandler<MouseEvent> textMouseHandler = selectedStackPane -> {
         int columnIndexSelectionX = GridPane.getColumnIndex((Text)selectedStackPane.getSource());
         int rowIndexSelectionY = GridPane.getRowIndex((Text)selectedStackPane.getSource());
+        this.deHighlightLocations();
+        this.highlightPossibleMoves(columnIndexSelectionX, rowIndexSelectionY);
     };
+
+    private void PlayerMove(int x, int y)
+    {
+        chessEngine.playerMove(this.gameChessBoard, x, y);
+    }
+
+    private void highlightPossibleMoves(int x, int y)
+    {
+        AbstractChessPiece getSelectedPiece = this.gameChessBoard.chessBoard[y][x].chessPiece;
+        this.selectChessPiece(getSelectedPiece);
+        if (getSelectedPiece != null)
+        {
+            for (Pair<Integer, Integer> possibleMoves : getSelectedPiece.possibleMoves)
+            {
+                int xLocation = possibleMoves.getKey();
+                int yLocation = possibleMoves.getValue();
+
+                int xHightlightLocation = x + xLocation;
+                int yHighLightLocation = y + yLocation;
+
+                StackPane paneToHighLight = (StackPane)getNodeByRowColumnIndex(yHighLightLocation, xHightlightLocation, gameBoardGridPane);
+                paneToHighLight.setStyle("-fx-background-color: " + JavaFXProperties.chessBoardHighlightColor + ";");
+                highlightedLocations.add(new Pair<Integer, Integer>(xHightlightLocation, yHighLightLocation));
+
+            }
+        }
+    }
+
+    public Node getNodeByRowColumnIndex (final int row, final int column, GridPane gridPane) {
+        Node result = null;
+        ObservableList<Node> childrens = gridPane.getChildren();
+
+        for (Node node : childrens) {
+            if(GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column) {
+                result = node;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    public boolean isHighlitedColorSelected(int x, int y)
+    {
+        for (Pair<Integer, Integer> highlitedLocations : this.highlightedLocations)
+        {
+            int xhiglightedLocation = highlitedLocations.getKey();
+            int yhighlightedLocation = highlitedLocations.getValue();
+
+            if (xhiglightedLocation == x && yhighlightedLocation == y)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void deHighlightLocations()
+    {
+        for (Pair<Integer, Integer> highlitedLocations : this.highlightedLocations)
+        {
+            int xHightlightLocation = highlitedLocations.getKey();
+            int yHighLightLocation = highlitedLocations.getValue();
+
+            StackPane paneToHighLight = (StackPane)getNodeByRowColumnIndex(yHighLightLocation, xHightlightLocation, gameBoardGridPane);
+            String chosenColor;
+            if ((xHightlightLocation + yHighLightLocation) % 2 == 0) {
+                chosenColor = JavaFXProperties.chessBoardColorOne;
+            } else {
+                chosenColor = JavaFXProperties.chessBoardColorTwo;
+            }
+            paneToHighLight.setStyle("-fx-background-color: " + chosenColor + ";");
+        }
+        this.highlightedLocations.clear();
+    }
+
+    public void selectChessPiece(AbstractChessPiece selectChessPiece)
+    {
+        chessEngine.getCurrentPlayer().selectedChessPiece = selectChessPiece;
+    }
+
+
 }

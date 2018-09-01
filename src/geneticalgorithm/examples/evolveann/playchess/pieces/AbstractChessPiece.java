@@ -30,5 +30,5 @@ public abstract class AbstractChessPiece {
         this.color = color;
     }
 
-    abstract void UpdateMoves(ChessBoard board);
+    public abstract void UpdateMoves(ChessBoard board);
 }
