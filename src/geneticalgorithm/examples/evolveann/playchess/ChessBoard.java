@@ -5,6 +5,7 @@
  */
 package geneticalgorithm.examples.evolveann.playchess;
 
+import geneticalgorithm.examples.evolveann.playchess.pieces.AbstractChessPiece;
 import geneticalgorithm.examples.evolveann.playchess.pieces.Pawn;
 import javafx.util.Pair;
 
@@ -15,6 +16,7 @@ import javafx.util.Pair;
 public class ChessBoard {
 
     public ChessSquare[][] chessBoard = new ChessSquare[ChessProperties.MAX_CHESSBOARD_SIZE][ChessProperties.MAX_CHESSBOARD_SIZE];
+    public AbstractChessPiece selectedChessPiece;
 
     public ChessBoard() {
         for (int i = 2; i < ChessProperties.MAX_CHESSBOARD_SIZE; i++)
@@ -101,7 +103,7 @@ public class ChessBoard {
         }
         else
         {
-            if (this.canMove(ChessMovement.moveNorthEast, currentPosition) && chessBoard[y][x - 1].chessPiece instanceof Pawn)
+            if (this.canMove(ChessMovement.moveNorthWest, currentPosition) && chessBoard[y][x - 1].chessPiece instanceof Pawn)
             {
                 Pawn nextToPawn = (Pawn)chessBoard[y][x - 1].chessPiece;
                 if ((nextToPawn.pastMoves.size() == 1) && (nextToPawn.isTopSide))
@@ -115,7 +117,7 @@ public class ChessBoard {
                     }
                 }
             }
-            else if (this.canMove(ChessMovement.moveNorthWest, currentPosition) && chessBoard[y][x + 1].chessPiece instanceof Pawn)
+            else if (this.canMove(ChessMovement.moveNorthEast, currentPosition) && chessBoard[y][x + 1].chessPiece instanceof Pawn)
             {
                 Pawn nextToPawn = (Pawn)chessBoard[y][x + 1].chessPiece;
                 if ((nextToPawn.pastMoves.size() == 1) && (nextToPawn.isTopSide))
