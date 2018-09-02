@@ -11,6 +11,7 @@ public class King extends AbstractChessPiece {
 
     @Override
     public void UpdateMoves(ChessBoard board) {
+        this.possibleMoves.clear();
         if (board.canMoveOrCapture(ChessMovement.moveSouth, isTopSide, this.currentPosition))
         {
             this.possibleMoves.add(ChessMovement.moveSouth);

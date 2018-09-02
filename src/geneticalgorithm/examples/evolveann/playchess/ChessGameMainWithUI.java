@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -50,7 +51,6 @@ public class ChessGameMainWithUI extends Application {
         this.setChessBoardConstraints(gameBoardGridPane);
         primaryStage.setScene(new Scene(gameBoardGridPane, 400, 400));
         primaryStage.show();
-
 
         this.setupInitialChessBoardPositions();
         this.setUpGridPane();
@@ -176,8 +176,8 @@ public class ChessGameMainWithUI extends Application {
         boolean isPieceMoving = this.isHighlitedColorSelected(columnIndexSelectionX, rowIndexSelectionY);
         if (isPieceMoving)
         {
-            updateGridPane(columnIndexSelectionX, rowIndexSelectionY);
             PlayerMove(columnIndexSelectionX, rowIndexSelectionY);
+            updateGridPane(columnIndexSelectionX, rowIndexSelectionY);
         }
         this.deHighlightLocations();
         this.highlightPossibleMoves(columnIndexSelectionX, rowIndexSelectionY);
@@ -187,15 +187,15 @@ public class ChessGameMainWithUI extends Application {
     private final EventHandler<MouseEvent> textMouseHandler = selectedStackPane -> {
         int columnIndexSelectionX = GridPane.getColumnIndex((Text)selectedStackPane.getSource());
         int rowIndexSelectionY = GridPane.getRowIndex((Text)selectedStackPane.getSource());
-        this.selectChessPiece(this.getSelectedPiece(columnIndexSelectionX, rowIndexSelectionY));
         boolean isPieceMoving = this.isHighlitedColorSelected(columnIndexSelectionX, rowIndexSelectionY);
         if (isPieceMoving)
         {
-            updateGridPane(columnIndexSelectionX, rowIndexSelectionY);
             PlayerMove(columnIndexSelectionX, rowIndexSelectionY);
+            updateGridPane(columnIndexSelectionX, rowIndexSelectionY);
         }
         this.deHighlightLocations();
         this.highlightPossibleMoves(columnIndexSelectionX, rowIndexSelectionY);
+        this.selectChessPiece(this.getSelectedPiece(columnIndexSelectionX, rowIndexSelectionY));
     };
 
     private void PlayerMove(int x, int y)
@@ -235,20 +235,6 @@ public class ChessGameMainWithUI extends Application {
             }
         }
 
-        return result;
-    }
-
-
-    public Node getNodeByRowColumnIndexText (final int row, final int column, GridPane gridPane) {
-        Node result = null;
-        ObservableList<Node> childrens = gridPane.getChildren();
-
-        for (Node node : childrens) {
-            if(GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column && node instanceof Text) {
-                result = node;
-                break;
-            }
-        }
         return result;
     }
 
@@ -298,16 +284,29 @@ public class ChessGameMainWithUI extends Application {
 
     public void updateGridPane(int xNewLocation, int yNewLocation)
     {
-        int xOldLocation = gameChessBoard.selectedChessPiece.currentPosition.getKey();
-        int yOldLocation = gameChessBoard.selectedChessPiece.currentPosition.getValue();
+        this.removeAllText();
+        this.setUpGridPane();
+//        int xOldLocation = gameChessBoard.selectedChessPiece.currentPosition.getKey();
+//        int yOldLocation = gameChessBoard.selectedChessPiece.currentPosition.getValue();
+//
+//        Text oldLocationText  = (Text)getNodeByRowColumnIndexText(yOldLocation, xOldLocation, gameBoardGridPane);
+//        Text newLocationText  = (Text)getNodeByRowColumnIndexText(yNewLocation, xNewLocation, gameBoardGridPane);
+//
+//        gameBoardGridPane.getChildren().remove(newLocationText);
+//        gameBoardGridPane.getChildren().remove(oldLocationText);
+//        gameBoardGridPane.add(oldLocationText, xNewLocation, yNewLocation);
+    }
 
-        Text oldLocationText  = (Text)getNodeByRowColumnIndexText(yOldLocation, xOldLocation, gameBoardGridPane);
-        Text newLocationText  = (Text)getNodeByRowColumnIndexText(yNewLocation, xNewLocation, gameBoardGridPane);
+    public void removeAllText()
+    {
+        Iterator<Node> gridpaneIterator = this.gameBoardGridPane.getChildren().iterator();
 
-        gameBoardGridPane.getChildren().remove(newLocationText);
-        gameBoardGridPane.getChildren().remove(oldLocationText);
-        gameBoardGridPane.add(oldLocationText, xNewLocation, yNewLocation);
+        while (gridpaneIterator.hasNext()) {
+            Node children = gridpaneIterator.next();
 
+            if (children instanceof Text)
+                gridpaneIterator.remove();
+        }
     }
 
 

@@ -8,6 +8,8 @@ package geneticalgorithm.examples.evolveann.playchess.pieces;
 import geneticalgorithm.examples.evolveann.playchess.ChessBoard;
 import geneticalgorithm.examples.evolveann.playchess.ChessMovement;
 import java.util.ArrayList;
+import java.util.List;
+
 import javafx.util.Pair;
 
 /**
@@ -76,8 +78,16 @@ public class Pawn extends AbstractChessPiece {
         }
     }
     
-    private void PromotePawn(){
-        
+    public List<AbstractChessPiece> PromotePawn(int x, int y, boolean isTopside, String color)
+    {
+        return new ArrayList<AbstractChessPiece>()
+        {{
+            add(new Queen(x, y, isTopSide, color));
+            add(new Knight(x, y, isTopSide, color));
+            add(new Rook(x, y, isTopSide, color));
+            add(new Bishop(x, y, isTopSide, color));
+
+        }};
     }
     
     @Override
